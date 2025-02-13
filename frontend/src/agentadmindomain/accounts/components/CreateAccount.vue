@@ -17,6 +17,7 @@ let form: CreateAccount = reactive({
   // username: "",
   email: "",
   phone: "",
+  password: "",
 });
 const notify = useNotificationsStore();
 const loading: Ref<boolean> = ref(false);
@@ -43,7 +44,7 @@ function submit() {
     email: form.email,
     phone: form.phone,
     status: "active",
-    // id: "",
+    password: form.password,
     middleNames: "",
     role: "",
     createdAt: "",
@@ -134,6 +135,19 @@ function submit() {
               autocomplete="off"
               type="tel"
               v-model="form.phone"
+              class="noFocus form-element e-input w-full"
+              required
+            />
+          </div>
+          <div class="cell">
+            <label
+              class="block uppercase text-neutral-600 text-xs font-bold mb-1"
+              >Password</label
+            >
+            <input
+              autocomplete="off"
+              type="tel"
+              v-model="form.password"
               class="noFocus form-element e-input w-full"
               required
             />

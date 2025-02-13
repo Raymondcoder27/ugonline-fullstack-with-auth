@@ -36,8 +36,9 @@ func main() {
 
 	// Define route groups for the 3 dashboards
 	// Auth group for protected routes
-	// authGroup := r.Group("/", middleware.RequireAuth)
+	// authGroup := r.Group("/")
 	authGroup := r.Group("/", middleware.RequireAuth)
+	// abc@1234
 	{
 		// Till Operator Dashboard
 		tillOperator := authGroup.Group("/till-operator")

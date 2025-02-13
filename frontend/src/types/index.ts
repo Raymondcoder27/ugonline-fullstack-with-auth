@@ -62,6 +62,7 @@ export interface CreateAccount {
   role: string;
   username: string;
   phone: string;
+  password: string;
 }
 
 // // allocate float interface
