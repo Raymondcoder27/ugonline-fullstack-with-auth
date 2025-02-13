@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"example.com/ugonlinemergeserver/models"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -22,6 +23,7 @@ func SeedAdminUser() {
 		}
 
 		user = models.BackofficeAccount{
+			ID:       uuid.New().String(), // Ensure UUID is set
 			Email:    email,
 			Password: string(hashedPassword),
 		}

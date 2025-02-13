@@ -146,3 +146,29 @@ func Validate(c *gin.Context) {
 	// })
 	c.JSON(http.StatusOK, user)
 }
+
+func GetProfile(c *gin.Context) {
+	// Extract user ID from middleware
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
+		return
+	}
+
+	// Fetch user from DB
+	var user models.BackofficeAccount
+	result := initializers.DB.First(&user, "id = ?", userID)
+	if result.Error != nil {
+		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
+	}
+
+	// Return user profile (excluding password)
+	c.JSON(http.StatusOK, gin.H{
+		"data": gin.H{
+			"id":    user.ID,
+			"email": user.Email,
+			"role":  user.Role, // Assuming you have a 'Role' field
+		},
+	})
+}
