@@ -16,7 +16,6 @@ import { useAuth } from "@/agentadmindomain/auth/composables";
 import moment from "moment";
 import DashboardTab from "@/agentadmindomain/dashboard/DashboardTab.vue";
 
-
 // Import the branch manager domain components
 import BranchManagerLayout from "@/layouts/BranchManagerLayout.vue";
 import BranchManagerAppServices from "@/branchmanagerdomain/services/AppServices.vue";
