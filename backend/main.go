@@ -31,7 +31,7 @@ func main() {
 	r.Use(cors.New(config))
 
 	r.POST("/register", auth.Signup)
-	r.POST("/login", auth.Login)
+	r.POST("/auth/login", auth.Login)
 	r.GET("/validate", middleware.RequireAuth, auth.Validate)
 
 	// Define route groups for the 3 dashboards

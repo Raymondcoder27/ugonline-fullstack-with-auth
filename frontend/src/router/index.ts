@@ -67,8 +67,8 @@ const mergedRoutes: RouteRecordRaw[] = [
     path: "/agent-admin",
     name: "app-home",
     component: MainLayout,
-    meta: { requiresAuth: true },
-    // meta: { requiresAuth: false },
+    // meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
     redirect: "/agent-admin/dashboard",
     children: [
       // { name: "app-dashboard", path: "/agent-admin/dashboard", component: AppDashboard },
@@ -89,8 +89,8 @@ const mergedRoutes: RouteRecordRaw[] = [
     path: "/branch-manager",
     name: "branch-manager-home",
     component: BranchManagerLayout,
-    // meta: { requiresAuth: false },
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: false },
+    // meta: { requiresAuth: true },
     // redirect: "/agent/services",
     redirect: "/branch-manager/dashboard",
     children: [

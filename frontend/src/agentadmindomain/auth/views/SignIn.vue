@@ -78,7 +78,7 @@ watch(
               <label class="cursor-pointer text-sm italic hover:underline hover:text-primary-800">Forgot Password?</label>
             </div>
 
-            <button :disabled="!validForm" type="submit" class="mt-2 button">
+            <button :disabled="!validForm" type="submit" class="mt-2 button cursor-pointer">
               Sign In
               <span class="lds-ring mx-1" v-if="loading">
                 <div></div>

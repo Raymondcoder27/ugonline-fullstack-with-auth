@@ -107,7 +107,7 @@ func Login(c *gin.Context) {
 	var user models.BackofficeAccount
 	initializers.DB.First(&user, "email = ?", body.Email)
 
-	if user.ID == 0 {
+	if user.ID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "User not found."})
 		return
 	}
