@@ -23,6 +23,7 @@ export const useAccountStore = defineStore("accounts", () => {
     return api.post<AuthResponseInterface<SignUpResponseInterface>>("/auth/signup", payload).then((response: any) => {
       signUpResponse.value = response.data.data
       username.value = response.data.data.username
+      // email.value = response.data.data.email
     })
   }
 

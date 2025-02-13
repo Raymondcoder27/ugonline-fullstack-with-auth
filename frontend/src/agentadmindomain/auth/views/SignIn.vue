@@ -11,7 +11,8 @@ const router = useRouter()
 const store = useAccountStore()
 const commons = useCommonsStore()
 const form: SignInPayloadInterface = reactive({
-  username: "",
+  // username: "",
+  email: "",
   password: ""
 })
 const loading: Ref<boolean> = ref(false)
@@ -35,8 +36,11 @@ watch(
     form.username = data.replace(" ", "").toLowerCase()
   }
 )
+// const validForm: ComputedRef<boolean> = computed(() => {
+//   return form.username.length > 0 && form.password.length >= 8
+// })
 const validForm: ComputedRef<boolean> = computed(() => {
-  return form.username.length > 0 && form.password.length >= 8
+  return form.email.length > 0 && form.password.length >= 8
 })
 const { credentials } = useAuth()
 watch(
