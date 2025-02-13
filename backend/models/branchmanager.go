@@ -36,6 +36,7 @@ type BackofficeAccount struct {
 	Email    string `json:"email" gorm:"unique;"`
 	Role     string `json:"role" gorm:""`   // e.g., "Administrator", "Manager"
 	Till     string `json:"till" gorm:""`   // e.g., "Till 1"
+	Branch   string `json:"branch" gorm:""` // e.g., "Till 1"
 	Status   string `json:"status" gorm:""` // e.g., "Active", "Inactive"
 	Password string `json:"password" gorm:""`
 }
