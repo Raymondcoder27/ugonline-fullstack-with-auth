@@ -33,7 +33,8 @@ onMounted(() => {
 watch(
   () => email.value,
   (data) => {
-    form.username = data.replace(" ", "").toLowerCase()
+    // form.username = data.replace(" ", "").toLowerCase()
+    form.email = data.replace(" ", "").toLowerCase()
   }
 )
 // const validForm: ComputedRef<boolean> = computed(() => {
