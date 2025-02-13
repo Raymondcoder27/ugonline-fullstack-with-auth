@@ -15,6 +15,7 @@ func init() {
 	initializers.ConnectToDB()
 	initializers.MigrateDB()
 	initializers.InitMinioClient()
+	initializers.SeedAdminUser() // Seed the admin user
 }
 
 func main() {
