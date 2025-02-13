@@ -40,6 +40,27 @@ export const useAccountStore = defineStore("accounts", () => {
     })
   }
 
+  // const fetchProfile = async () => {
+  //   const storedData = storageCredentials.value ? JSON.parse(storageCredentials.value) : null
+  //   const token = storedData?.token
+  
+  //   if (!token) {
+  //     console.error("No token found in storageCredentials")
+  //     return
+  //   }
+  
+  //   return api.get("/auth/profile", {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`
+  //     }
+  //   }).then((response: any) => {
+  //     profile.value = response.data.data
+  //   }).catch((error) => {
+  //     console.error("Profile fetch failed:", error.response.data)
+  //   })
+  // }
+  
+
   const verify = async () => {
     return api.post("/auth/verify").then(() => { })
   }
