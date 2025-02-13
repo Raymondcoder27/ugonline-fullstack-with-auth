@@ -4,7 +4,8 @@
  *
  */
 export interface SignInPayloadInterface {
-  username: string
+  email: string
+  // username: string
   password: string
 }
 
