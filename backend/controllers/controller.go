@@ -658,8 +658,6 @@ func GetBranchBackOfficeAccounts(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": requests})
 }
 
-// agentAdmin.POST("/create-branch", controllers.CreateBranch)
-
 // GetBranchManagerFloatRequests fetches all float requests for the Branch Manager.
 func GetBranchManagerFloatRequests(c *gin.Context) {
 	var requests []models.BranchManagerFloatRequest
