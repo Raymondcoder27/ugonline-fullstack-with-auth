@@ -60,11 +60,11 @@ import ApiSubmissions from "@/tilloperatordomain/apisubmissions/ServiceApplicati
 const mergedRoutes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: { name: "app-home" },
+    redirect: { name: "agent-admin-home" },
   },
   {
     path: "/agent-admin",
-    name: "app-home",
+    name: "agent-admin-home",
     component: MainLayout,
     meta: { requiresAuth: true },
     // meta: { requiresAuth: false },
@@ -193,7 +193,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else if (to.name === "app-account-sign-in" && credentials.value && refreshToken.value) {
-    next({ name: "app-home" });
+    next({ name: "agent-admin-home" });
   } else {
     next();
   }

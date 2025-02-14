@@ -24,9 +24,9 @@ api.interceptors.response.use(
     const commons = useCommonsStore()
     commons.loading = false
 
-    // if (error.response !== undefined && error.response.status === 401) {
-    //   c.value = null
-    // }
+    if (error.response !== undefined && error.response.status === 401) {
+      c.value = null
+    }
 
     return Promise.reject(error)
   }

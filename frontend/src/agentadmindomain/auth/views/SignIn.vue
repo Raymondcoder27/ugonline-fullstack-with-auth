@@ -48,7 +48,7 @@ watch(
   () => credentials.value,
   (data) => {
     if (data !== undefined) {
-      router.push({ name: "providers" })
+      router.push({ name: "agent-admin-home" })
     }
   },
   { deep: true }
