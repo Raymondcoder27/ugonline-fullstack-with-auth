@@ -64,6 +64,7 @@ export interface CreateAccount {
   username: string;
   phone: string;
   password: string;
+  unharshedPassword: string;
 }
 
 // // allocate float interface
