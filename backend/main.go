@@ -33,7 +33,7 @@ func main() {
 
 	r.POST("/register", auth.Signup)
 	r.POST("/auth/login", auth.Login)
-	r.GET("/auth/profile", auth.GetProfile)
+	r.GET("/auth/profile", middleware.RequireAuth, auth.GetProfile)
 	r.GET("/validate", middleware.RequireAuth, auth.Validate)
 
 	// Define route groups for the 3 dashboards
