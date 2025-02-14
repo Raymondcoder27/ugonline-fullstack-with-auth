@@ -237,7 +237,7 @@ func Validate(c *gin.Context) {
 //	}
 func GetProfile(c *gin.Context) {
 	// Extract user ID from middleware
-	userID, exists := c.Get("userID")
+	userID, exists := c.Get("userId")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
 		return
