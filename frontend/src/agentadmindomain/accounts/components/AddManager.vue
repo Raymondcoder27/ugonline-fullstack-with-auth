@@ -15,7 +15,7 @@ const branchStore = useBranchStore();
   lastName: "",
   email: "",
   phone: "",
-  // role: "admin",
+  role: "Branch Manager",
   branchId: null, 
 })
 
@@ -56,9 +56,10 @@ function submit() {
     phone: form.phone,
     // role: form.role,
     branchId: form.branchId,
+    role: form.role
   };
   loading.value = true;
-  store.addManagerAccount(payload); // Simply add the branch
+  store.createBranchManagerAccount(payload); // Simply add the branch
   notify.success("Manager Account Created");
   emit("managerAccountCreated");
   loading.value = false;

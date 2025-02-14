@@ -12,6 +12,9 @@ import (
 func SeedAdminUser() {
 	email := "admin@example.com"
 	password := "Admin@123" // This is the raw password
+	firstName := "Mwebe"
+	lastName := "Raymond"
+	role := "Agent Admin"
 
 	var user models.BackofficeAccount
 	result := DB.First(&user, "email = ?", email)
@@ -23,9 +26,12 @@ func SeedAdminUser() {
 		}
 
 		user = models.BackofficeAccount{
-			ID:       uuid.New().String(), // Ensure UUID is set
-			Email:    email,
-			Password: string(hashedPassword),
+			ID:        uuid.New().String(), // Ensure UUID is set
+			Email:     email,
+			Password:  string(hashedPassword),
+			FirstName: firstName,
+			LastName:  lastName,
+			Role:      role,
 		}
 
 		if err := DB.Create(&user).Error; err != nil {
