@@ -24,10 +24,17 @@ export function useAuth() {
     return JSON.parse(Buffer.from(credentials.value.access_token.split(".")[1], "base64").toString())
   })
 
-  const refreshToken: ComputedRef<JwtTokenInterface | undefined> = computed(() => {
-    if (credentials.value === undefined) return undefined
-    return JSON.parse(Buffer.from(credentials.value.refresh_token.split(".")[1], "base64").toString())
-  })
+  // const refreshToken: ComputedRef<JwtTokenInterface | undefined> = computed(() => {
+  //   if (credentials.value === undefined) return undefined
+  //   return JSON.parse(Buffer.from(credentials.value.refresh_token.split(".")[1], "base64").toString())
+  // })
 
+  const refreshToken: ComputedRef<JwtTokenInterface | undefined> = computed(() => {
+    if (!credentials.value || !credentials.value.refresh_token) return undefined
+    const tokenParts = credentials.value.refresh_token.split(".")
+    if (tokenParts.length < 3) return undefined // Ensure the JWT structure is valid
+    return JSON.parse(Buffer.from(tokenParts[1], "base64").toString())
+  })
+  
   return { validPhone, validPassword, credentials, accessToken, refreshToken }
 }
