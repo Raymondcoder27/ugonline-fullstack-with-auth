@@ -6,7 +6,7 @@ import (
 
 // Session represents an active session for a user
 type Session struct {
-	ID        string    `gorm:"primaryKey; json:"id"`
+	ID        string    `json:"id" gorm:"primaryKey"`
 	UserID    string    `gorm:"not null" json:"user_id"`
 	Active    bool      `gorm:"default:true" json:"active"`
 	IssuedAt  time.Time `gorm:"autoCreateTime" json:"issuedAt"`
