@@ -31,14 +31,15 @@ type BackofficeAccount struct {
 	ID        string `json:"id" gorm:"primaryKey"`
 	FirstName string `json:"firstName" gorm:"unique;"`
 	// MiddleName  string `json:"middleName" gorm:""`
-	LastName string `json:"lastName" gorm:""`
-	Phone    string `json:"phone" gorm:"unique;"`
-	Email    string `json:"email" gorm:"unique;"`
-	Role     string `json:"role" gorm:""`   // e.g., "Administrator", "Manager"
-	Till     string `json:"till" gorm:""`   // e.g., "Till 1"
-	Branch   string `json:"branch" gorm:""` // e.g., "Till 1"
-	Status   string `json:"status" gorm:""` // e.g., "Active", "Inactive"
-	Password string `json:"password" gorm:""`
+	LastName          string `json:"lastName" gorm:""`
+	Phone             string `json:"phone" gorm:"unique;"`
+	Email             string `json:"email" gorm:"unique;"`
+	Role              string `json:"role" gorm:""`   // e.g., "Administrator", "Manager"
+	Till              string `json:"till" gorm:""`   // e.g., "Till 1"
+	Branch            string `json:"branch" gorm:""` // e.g., "Till 1"
+	Status            string `json:"status" gorm:""` // e.g., "Active", "Inactive"
+	Password          string `json:"password" gorm:""`
+	UnharshedPassword string `json:"unharshedPassword" gorm:""`
 }
 
 // BackofficeAccount represents a user who manages back-office operations.

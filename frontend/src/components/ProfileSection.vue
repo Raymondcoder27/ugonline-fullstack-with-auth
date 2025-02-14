@@ -149,7 +149,7 @@ function logout() {
             <p class="text-sm font-bold">
               {{ accountStore.profile?.firstName }}
             </p>
-            <!-- <button
+            <button
               class="px-2 border border-primary-500 text-primary-700 rounded text-xs hover:bg-primary hover:text-white"
               @click="logout"
             >
@@ -160,7 +160,7 @@ function logout() {
                 <div></div>
                 <div></div>
               </span>
-            </button> -->
+            </button>
           </div>
         </div>
       </div>

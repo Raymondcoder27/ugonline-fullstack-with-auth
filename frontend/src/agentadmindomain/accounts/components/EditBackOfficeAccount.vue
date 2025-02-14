@@ -67,6 +67,7 @@ onMounted(() => {
   form.phone = data.phone
   form.status = data.status
   form.username = data.username
+  form.unharshedPassword = data.unharshedPassword
 })
 
 function submit(){
@@ -81,7 +82,8 @@ function submit(){
     email: form.email,
     phone: form.phone,
     status: form.status,
-    username:form.username
+    username:form.username,
+    password: form.unharshedPassword,
   }
   store
       .editBackofficeAccount(id, payload)
@@ -150,6 +152,10 @@ function submit(){
         <div class="cell">
           <label class="block uppercase text-neutral-600 text-xs font-bold mb-1">Phone Number</label>
           <input type="tel" v-model="form.phone" class="noFocus form-element e-input w-full"/>
+        </div>
+        <div class="cell">
+          <label class="block uppercase text-neutral-600 text-xs font-bold mb-1">Password</label>
+          <input type="tel" v-model="form.unharshedPassword" class="noFocus form-element e-input w-full"/>
         </div>
       </div>
       

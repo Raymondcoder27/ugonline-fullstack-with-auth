@@ -45,6 +45,7 @@ function submit() {
     phone: form.phone,
     status: "active",
     password: form.password,
+    unharshedPassword: form.password,
     middleNames: "",
     role: "",
     createdAt: "",
