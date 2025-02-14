@@ -6,7 +6,8 @@ import (
 
 // Device represents a device associated with a user's session
 type Device struct {
-	ID             string    `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()" json:"id"`
+	// ID             string    `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()" json:"id"`
+	ID             string    `gorm:"primaryKey; json:"id"`
 	SessionID      string    `gorm:"not null" json:"session_id"`
 	IPAddress      string    `json:"ipAddress"`
 	UserAgent      string    `json:"userAgent"`
