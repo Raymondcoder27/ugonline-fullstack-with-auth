@@ -52,7 +52,7 @@ export interface UserProfileInterface {
   id: string
   firstName:string
   lastName:string
-  username: string
+  // username: string
   phone: string
   emailVerified: boolean
   phoneVerified: boolean

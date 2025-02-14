@@ -210,6 +210,31 @@ func Validate(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+// func GetProfile(c *gin.Context) {
+// 	// Extract user ID from middleware
+// 	userID, exists := c.Get("userID")
+// 	if !exists {
+// 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
+// 		return
+// 	}
+
+// 	// Fetch user from DB
+// 	var user models.BackofficeAccount
+// 	result := initializers.DB.First(&user, "id = ?", userID)
+// 	if result.Error != nil {
+// 		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+// 		return
+// 	}
+
+//		// Return user profile (excluding password)
+//		c.JSON(http.StatusOK, gin.H{
+//			"data": gin.H{
+//				"id":    user.ID,
+//				"email": user.Email,
+//				"role":  user.Role, // Assuming you have a 'Role' field
+//			},
+//		})
+//	}
 func GetProfile(c *gin.Context) {
 	// Extract user ID from middleware
 	userID, exists := c.Get("userID")
@@ -226,12 +251,57 @@ func GetProfile(c *gin.Context) {
 		return
 	}
 
-	// Return user profile (excluding password)
-	c.JSON(http.StatusOK, gin.H{
+	// Fetch active sessions (assuming you have a `Session` model)
+	var sessions []models.Session
+	initializers.DB.Where("user_id = ? AND active = ?", userID, true).Find(&sessions)
+
+	// Map sessions and their devices
+	sessionData := []gin.H{}
+	for _, session := range sessions {
+		var devices []models.Device
+		initializers.DB.Where("session_id = ?", session.ID).Find(&devices)
+
+		deviceData := []gin.H{}
+		for _, device := range devices {
+			deviceData = append(deviceData, gin.H{
+				"id":             device.ID,
+				"sessionID":      device.SessionID,
+				"ipAddress":      device.IPAddress,
+				"userAgent":      device.UserAgent,
+				"createdAt":      device.CreatedAt,
+				"lastActivityAt": device.LastActivityAt,
+			})
+		}
+
+		sessionData = append(sessionData, gin.H{
+			"id":        session.ID,
+			"active":    session.Active,
+			"issuedAt":  session.IssuedAt,
+			"expiresAt": session.ExpiresAt,
+			"devices":   deviceData,
+		})
+	}
+
+	// Construct response
+	response := gin.H{
+		"success": true,
+		"type":    "*db.UserInfo",
 		"data": gin.H{
-			"id":    user.ID,
-			"email": user.Email,
-			"role":  user.Role, // Assuming you have a 'Role' field
+			"id":            user.ID,
+			"username":      user.Email, // Assuming username is the email
+			"phone":         user.Phone,
+			"role":          user.Role,
+			"firstName":     user.FirstName,
+			"lastName":      user.LastName,
+			"emailVerified": user.EmailVerified,
+			"activatedAt":   user.ActivatedAt,
+			"phoneVerified": user.PhoneVerified,
+			"createdAt":     user.CreatedAt,
+			"email":         user.Email,
+			"sessions":      sessionData,
 		},
-	})
+		"time": time.Now().Unix(),
+	}
+
+	c.JSON(http.StatusOK, response)
 }
