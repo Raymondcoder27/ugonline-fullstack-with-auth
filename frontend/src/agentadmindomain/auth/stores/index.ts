@@ -41,12 +41,12 @@ export const useAccountStore = defineStore("accounts", () => {
   // }
   const fetchProfile = async () => {
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-  
+
     if (!token) {
       console.error("No token found");
       return;
     }
-  
+
     try {
       const response = await api.get("/auth/profile", {
         headers: {
@@ -59,17 +59,17 @@ export const useAccountStore = defineStore("accounts", () => {
       console.error("Error fetching profile:", error);
     }
   };
-  
+
 
   // const fetchProfile = async () => {
   //   const storedData = storageCredentials.value ? JSON.parse(storageCredentials.value) : null
   //   const token = storedData?.token
-  
+
   //   if (!token) {
   //     console.error("No token found in storageCredentials")
   //     return
   //   }
-  
+
   //   return api.get("/auth/profile", {
   //     headers: {
   //       Authorization: `Bearer ${token}`
@@ -80,7 +80,7 @@ export const useAccountStore = defineStore("accounts", () => {
   //     console.error("Profile fetch failed:", error.response.data)
   //   })
   // }
-  
+
 
   const verify = async () => {
     return api.post("/auth/verify").then(() => { })
