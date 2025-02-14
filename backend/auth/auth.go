@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -87,16 +86,60 @@ func Signup(c *gin.Context) {
 // 	c.JSON(http.StatusOK, gin.H{"token": tokenString})
 // }
 
+// func Login(c *gin.Context) {
+// 	var body struct {
+// 		Email    string
+// 		Password string
+// 	}
+
+// 	// if c.BindJSON(&body) != nil {
+// 	// 	c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid email or password."})
+// 	// 	return
+// 	// }
+
+// 	if err := c.BindJSON(&body); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid email or password.", "error": err.Error()})
+// 		return
+// 	}
+
+// 	// Look up user by email
+// 	var user models.BackofficeAccount
+// 	initializers.DB.First(&user, "email = ?", body.Email)
+
+// 	if user.ID == "" {
+// 		c.JSON(http.StatusBadRequest, gin.H{"message": "User not found."})
+// 		return
+// 	}
+
+// 	// Compare passwords
+// 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+// 	if err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"message": "Incorrect password."})
+// 		return
+// 	}
+
+// 	fmt.Println("Stored password hash:", user.Password)
+// 	fmt.Println("Incoming password:", body.Password)
+
+// 	// Generate a JWT token
+// 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+// 		"sub": user.ID,
+// 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+// 	})
+
+// 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+// 	if err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to create token."})
+// 		return
+// 	}
+
+//		c.JSON(http.StatusOK, gin.H{"token": tokenString})
+//	}
 func Login(c *gin.Context) {
 	var body struct {
 		Email    string
 		Password string
 	}
-
-	// if c.BindJSON(&body) != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid email or password."})
-	// 	return
-	// }
 
 	if err := c.BindJSON(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid email or password.", "error": err.Error()})
@@ -108,33 +151,53 @@ func Login(c *gin.Context) {
 	initializers.DB.First(&user, "email = ?", body.Email)
 
 	if user.ID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "User not found."})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "User not found."})
 		return
 	}
 
 	// Compare passwords
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Incorrect password."})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Incorrect password."})
 		return
 	}
 
-	fmt.Println("Stored password hash:", user.Password)
-	fmt.Println("Incoming password:", body.Password)
-
-	// Generate a JWT token
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+	// Generate JWT Access Token (valid for 1 hour)
+	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": user.ID,
-		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+		"exp": time.Now().Add(time.Hour).Unix(), // 1 hour expiry
 	})
 
-	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+	accessTokenString, err := accessToken.SignedString([]byte(os.Getenv("SECRET")))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to create token."})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to create access token."})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": tokenString})
+	// Generate JWT Refresh Token (valid for 7 days)
+	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub": user.ID,
+		"exp": time.Now().Add(time.Hour * 24 * 7).Unix(), // 7 days expiry
+	})
+
+	refreshTokenString, err := refreshToken.SignedString([]byte(os.Getenv("SECRET")))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to create refresh token."})
+		return
+	}
+
+	// Return response in required format
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"type":    "auth.TokenResponse",
+		"data": gin.H{
+			"access_token":  accessTokenString,
+			"refresh_token": refreshTokenString,
+			"expires_in":    3600, // 1 hour in seconds
+			"token_type":    "Bearer",
+		},
+		"time": time.Now().Unix(),
+	})
 }
 
 func Validate(c *gin.Context) {

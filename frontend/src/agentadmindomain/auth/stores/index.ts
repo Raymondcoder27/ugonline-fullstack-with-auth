@@ -34,31 +34,31 @@ export const useAccountStore = defineStore("accounts", () => {
     })
   }
 
-  // const fetchProfile = async () => {
-  //   return api.get("/auth/profile").then((response: any) => {
-  //     profile.value = response.data.data
-  //   })
-  // }
   const fetchProfile = async () => {
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    return api.get("/auth/profile").then((response: any) => {
+      profile.value = response.data.data
+    })
+  }
+  // const fetchProfile = async () => {
+  //   const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
-    if (!token) {
-      console.error("No token found");
-      return;
-    }
+  //   if (!token) {
+  //     console.error("No token found");
+  //     return;
+  //   }
 
-    try {
-      const response = await api.get("/auth/profile", {
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-      profile.value = response.data.data;
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-  };
+  //   try {
+  //     const response = await api.get("/auth/profile", {
+  //       headers: {
+  //         "Authorization": `Bearer ${token}`,
+  //         "Content-Type": "application/json"
+  //       }
+  //     });
+  //     profile.value = response.data.data;
+  //   } catch (error) {
+  //     console.error("Error fetching profile:", error);
+  //   }
+  // };
 
 
   // const fetchProfile = async () => {
