@@ -66,9 +66,11 @@ type BranchManagers struct {
 	// ManagerID string `json:"managerId" gorm:""`
 	// Branch    Branch            `json:"branch" gorm:"foreignKey:BranchID"`
 	// Manager   BackofficeAccount `json:"manager" gorm:"foreignKey:ManagerID"`
-	FirstName string `json:"firstName" gorm:""`
-	LastName  string `json:"lastName" gorm:""`
-	Email     string `json:"email" gorm:""`
-	Phone     string `json:"phone" gorm:""`
-	Branch    string `json:"branch" gorm:""`
+	FirstName         string `json:"firstName" gorm:""`
+	LastName          string `json:"lastName" gorm:""`
+	Email             string `json:"email" gorm:""`
+	Phone             string `json:"phone" gorm:""`
+	Branch            string `json:"branch" gorm:""`
+	Password          string `json:"password" gorm:""`
+	UnharshedPassword string `json:"unharshedPassword" gorm:""`
 }

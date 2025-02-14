@@ -45,6 +45,7 @@ export interface Account {
   email: string;
   role: string;
   username: string
+  password: string
   emailVerified: boolean
   phoneVerified: boolean
   phone: string;
