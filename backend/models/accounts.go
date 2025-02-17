@@ -53,7 +53,7 @@ type AgentAdminAccount struct {
 	Role     string `json:"role" gorm:""` // e.g., "Administrator", "Manager"
 	Till     string `json:"till" gorm:""` // e.g., "Till 1"
 	// Branch            string `json:"branch" gorm:""` // e.g., "Till 1"
-	Branch Branch `json:"branch" gorm:"foreignKey:BranchID"`
+	// Branch *Branch `json:"branch" gorm:"foreignKey:BranchID"`
 	// Manager           BranchManager `json:"manager" gorm:"foreignKey:ManagerID"`
 	Managers          []*BranchManager `json:"managers" gorm:"foreignKey:AgentAdminAccountID"`
 	Status            string           `json:"status" gorm:""` // e.g., "Active", "Inactive"
@@ -85,11 +85,13 @@ type BranchManagers struct {
 	// ManagerID string `json:"managerId" gorm:""`
 	// Branch    Branch            `json:"branch" gorm:"foreignKey:BranchID"`
 	// Manager   BackofficeAccount `json:"manager" gorm:"foreignKey:ManagerID"`
-	FirstName         string `json:"firstName" gorm:""`
-	LastName          string `json:"lastName" gorm:""`
-	Email             string `json:"email" gorm:""`
-	Phone             string `json:"phone" gorm:""`
-	Branch            string `json:"branch" gorm:""`
-	Password          string `json:"password" gorm:""`
-	UnharshedPassword string `json:"unharshedPassword" gorm:""`
+	AgentAdminAccountID string             `json:"agentAdminAccountId"`
+	AgentAdminAccount   *AgentAdminAccount `json:"agentAdminAccount" gorm:"foreignKey:AgentAdminAccountID"`
+	FirstName           string             `json:"firstName" gorm:""`
+	LastName            string             `json:"lastName" gorm:""`
+	Email               string             `json:"email" gorm:""`
+	Phone               string             `json:"phone" gorm:""`
+	Branch              string             `json:"branch" gorm:""`
+	Password            string             `json:"password" gorm:""`
+	UnharshedPassword   string             `json:"unharshedPassword" gorm:""`
 }

@@ -76,7 +76,7 @@ export const useAccounts = defineStore("user-management", () => {
   }
 
   // Branch Manager Accounts
-  const createBranchManagerAccount = async (payload: ManagerAccount) => {
+  const createBranchManagerAccount = async (payload: BranchManagerAccount) => {
     isLoading.value = true;
     try {
       const { data } = await api.post("/agent-admin/create-branch-manager-account", payload);
@@ -177,6 +177,8 @@ export const useAccounts = defineStore("user-management", () => {
         phone: user.phone,
         role: "branchManager",
         password: user.password,
+        unharshedPassword: user.password,
+        backofficeUserId: user.id,
         // status: user.status,
         // createdAt: new Date().toISOString(),
         // emailVerified: true,

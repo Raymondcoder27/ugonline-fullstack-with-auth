@@ -14,7 +14,7 @@ func SeedAdminUser() {
 	password := "Admin@123" // This is the raw password
 	firstName := "Mwebe"
 	lastName := "Raymond"
-	role := "Agent Admin"
+	role := "AgentAdmin"
 
 	// var user models.BackofficeAccount
 	var user models.AgentAdminAccount

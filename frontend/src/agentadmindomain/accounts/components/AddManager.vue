@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ManagerAccount } from "@/types";
+import type { BranchManagerAccount } from "@/types";
 import { type Ref, ref, reactive, onMounted } from "vue";
 import { useAccounts } from "@/agentadmindomain/accounts/stores";
 import { useNotificationsStore } from "@/stores/notifications";
@@ -8,13 +8,14 @@ import { useBranchStore } from "@/agentadmindomain/branches/stores";
 
 const branchStore = useBranchStore();
 
-const form: ManagerAccount = reactive({
+const form: BranchManagerAccount = reactive({
   firstName: "",
   lastName: "",
   email: "",
   phone: "",
   role: "Branch Manager",
   branchId: null,
+  password: "",
   // adminId: ""
 });
 
@@ -46,12 +47,20 @@ const store = useAccounts();
 //   loading.value = false;
 // }
 
-const findAdminId = () => {
-  const admin = store.backofficeAccounts.find(
-    (account) => account.role === "Agent Admin"
-  );
-  return admin?.id;
-};
+// const findAdminId = () => {
+//   const admin = store.backofficeAccounts.find(
+//     (account) => account.role === "Agent Admin"
+//   );
+//   return admin?.id;
+// };
+
+// find password from the manager's backoffice account
+// const findManagerPassword = () => {
+//   const manager = store.backofficeAccounts.find(
+//     (account) => account.id === 
+//   );
+//   return manager?.password;
+// };
 
 function submit() {
   let payload = {
@@ -62,7 +71,8 @@ function submit() {
     // role: form.role,
     branchId: form.branchId,
     role: form.role,
-    adminId: findAdminId(),
+    // adminId: findAdminId(),
+    password: form.password,
   };
   loading.value = true;
   store.createBranchManagerAccount(payload); // Simply add the branch

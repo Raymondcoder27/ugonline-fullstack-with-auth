@@ -104,7 +104,8 @@ function logout() {
       sessionStorage.clear();
       localStorage.clear();
       console.log("About to reload");
-      window.location.reload();
+      router.push({ name: "app-account-sign-in" });
+      // window.location.reload();
     })
     .catch((error: any) => {
       loading.value = false;

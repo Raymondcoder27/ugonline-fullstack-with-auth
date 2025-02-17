@@ -136,7 +136,153 @@ func Signup(c *gin.Context) {
 
 //		c.JSON(http.StatusOK, gin.H{"token": tokenString})
 //	}
+// func Login(c *gin.Context) {
+// 	var body struct {
+// 		Email    string
+// 		Password string
+// 	}
+
+// 	if err := c.BindJSON(&body); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid email or password.", "error": err.Error()})
+// 		return
+// 	}
+
+// 	// Look up user by email
+// 	// var user models.BackofficeAccount
+// 	var user models.AgentAdminAccount
+// 	initializers.DB.First(&user, "email = ?", body.Email)
+
+// 	if user.ID == "" {
+// 		c.JSON(http.StatusUnauthorized, gin.H{"message": "User not found."})
+// 		return
+// 	}
+
+// 	// Compare passwords
+// 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+// 	if err != nil {
+// 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Incorrect password."})
+// 		return
+// 	}
+
+// 	// Generate JWT Access Token (valid for 1 hour)
+// 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+// 		"sub": user.ID,
+// 		"exp": time.Now().Add(time.Hour).Unix(), // 1 hour expiry
+// 	})
+
+// 	accessTokenString, err := accessToken.SignedString([]byte(os.Getenv("SECRET")))
+// 	if err != nil {
+// 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to create access token."})
+// 		return
+// 	}
+
+// 	// Generate JWT Refresh Token (valid for 7 days)
+// 	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+// 		"sub": user.ID,
+// 		"exp": time.Now().Add(time.Hour * 24 * 7).Unix(), // 7 days expiry
+// 	})
+
+// refreshTokenString, err := refreshToken.SignedString([]byte(os.Getenv("SECRET")))
+//
+//	if err != nil {
+//		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to create refresh token."})
+//		return
+//	}
+//
+//		// Return response in required format
+//		c.JSON(http.StatusOK, gin.H{
+//			"success": true,
+//			"type":    "auth.TokenResponse",
+//			"data": gin.H{
+//				"access_token":  accessTokenString,
+//				"refresh_token": refreshTokenString,
+//				"expires_in":    3600, // 1 hour in seconds
+//				"token_type":    "Bearer",
+//			},
+//			"time": time.Now().Unix(),
+//		})
+//	}
 func Login(c *gin.Context) {
+	var body struct {
+		Email    string
+		Password string
+	}
+
+	if err := c.BindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid email or password.", "error": err.Error()})
+		return
+	}
+
+	// Define user struct
+	type User struct {
+		ID       string
+		Email    string
+		Password string
+		Role     string
+	}
+
+	var user User
+
+	// Search across multiple tables
+	if err := initializers.DB.Raw(`
+		SELECT id, email, password, 'AgentAdmin' AS role FROM agent_admin_accounts WHERE email = ?
+		UNION 
+		SELECT id, email, password, 'BranchManager' AS role FROM branch_managers WHERE email = ?
+		UNION 
+		SELECT id, email, password, 'TillOperator' AS role FROM till_operators WHERE email = ?
+	`, body.Email, body.Email, body.Email).Scan(&user).Error; err != nil || user.ID == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "User not found."})
+		return
+	}
+
+	// Compare passwords
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Incorrect password."})
+		return
+	}
+
+	// Generate JWT Access Token (valid for 1 hour)
+	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub":  user.ID,
+		"role": user.Role, // Include role in token
+		"exp":  time.Now().Add(time.Hour).Unix(),
+	})
+
+	accessTokenString, err := accessToken.SignedString([]byte(os.Getenv("SECRET")))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to create access token."})
+		return
+	}
+
+	// Generate JWT Refresh Token (valid for 7 days)
+	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub": user.ID,
+		"exp": time.Now().Add(time.Hour * 24 * 7).Unix(),
+	})
+
+	refreshTokenString, err := refreshToken.SignedString([]byte(os.Getenv("SECRET")))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to create refresh token."})
+		return
+	}
+
+	// Return response
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"type":    "auth.TokenResponse",
+		"data": gin.H{
+			"access_token":  accessTokenString,
+			"refresh_token": refreshTokenString,
+			"expires_in":    3600, // 1 hour
+			"token_type":    "Bearer",
+			"role":          user.Role,
+		},
+		"time": time.Now().Unix(),
+	})
+}
+
+func BranchManagerLogin(c *gin.Context) {
 	var body struct {
 		Email    string
 		Password string
@@ -149,7 +295,7 @@ func Login(c *gin.Context) {
 
 	// Look up user by email
 	// var user models.BackofficeAccount
-	var user models.AgentAdminAccount
+	var user models.BranchManagers
 	initializers.DB.First(&user, "email = ?", body.Email)
 
 	if user.ID == "" {

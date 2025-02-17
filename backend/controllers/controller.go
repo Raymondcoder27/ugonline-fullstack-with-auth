@@ -580,6 +580,12 @@ func CreateBranchManagerAccount(c *gin.Context) {
 	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 	// 	return
 	// }
+	adminID, exists := c.Get("userId")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	// save request to database replacing the id with the generated uuid
 	if err := initializers.DB.Create(&models.BranchManagers{
 		ID:        id,
@@ -587,8 +593,12 @@ func CreateBranchManagerAccount(c *gin.Context) {
 		LastName:  request.LastName,
 		Email:     request.Email,
 		// BranchID:  request.BranchID,
-		Phone:  request.Phone,
-		Branch: request.Branch,
+		// AgentAdminAccount: adminID.(string),
+		AgentAdminAccountID: adminID.(string),
+		Phone:               request.Phone,
+		Branch:              request.Branch,
+		Password:            request.Password,
+		UnharshedPassword:   request.Password,
 		// Status:    request.Status,
 	}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
