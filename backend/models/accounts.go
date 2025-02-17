@@ -100,5 +100,5 @@ type BranchManagers struct {
 	Branch              string             `json:"branch" gorm:""`
 	Password            string             `json:"password" gorm:""`
 	UnharshedPassword   string             `json:"unharshedPassword" gorm:""`
-	TillOperator        []*TillOperator    `json:"tillOperator" gorm:"foreignKey:BranchManagerID"`
+	// TillOperator        []*TillOperator    `json:"tillOperator" gorm:"foreignKey:BranchManagerID"`
 }

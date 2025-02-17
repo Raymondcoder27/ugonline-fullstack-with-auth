@@ -638,6 +638,12 @@ func CreateTillOperatorAccount(c *gin.Context) {
 	// 	return
 	// }
 
+	managerID, exists := c.Get("userId")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	hash, err := bcrypt.GenerateFromPassword([]byte(request.Password), 10)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to hash password."})
@@ -654,6 +660,7 @@ func CreateTillOperatorAccount(c *gin.Context) {
 		Phone: request.Phone,
 		Till:  request.Till,
 		// Status:    request.Status,
+		BranchManagerID:   managerID.(string),
 		Password:          string(hash),
 		UnharshedPassword: request.Password,
 	}).Error; err != nil {
