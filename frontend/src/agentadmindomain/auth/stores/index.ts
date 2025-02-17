@@ -48,12 +48,17 @@ export const useAccountStore = defineStore("accounts", () => {
       profile.value = response.data.data
 
       // redirect to the right dashboard using the role
+      if (!profile.value) {
+        console.error("Profile is undefined")
+        return
+      }
+  
+      // Now safely access profile.value.role
       if (profile.value.role === "AgentAdmin") {
         router.push({ name: "agent-admin-home" })
       } else if (profile.value.role === "BranchManager") {
         router.push({ name: "branch-manager-home" })
-      }
-      else if (profile.value.role === "TillOperator") {
+      } else if (profile.value.role === "TillOperator") {
         router.push({ name: "till-operator-home" })
       }
     })
