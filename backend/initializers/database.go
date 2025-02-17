@@ -44,6 +44,10 @@ func MigrateDB() {
 		log.Printf("Error migrating FloatRequest Database: %v", err)
 	}
 
+	if err := DB.AutoMigrate(&models.AgentAdminAccount{}); err != nil {
+		log.Printf("Error migrating FloatRequest Database: %v", err)
+	}
+
 	// Migrate the schema
 	if err := DB.AutoMigrate(&models.Session{}, &models.Device{}); err != nil {
 		log.Fatal("Migration failed: ", err)
