@@ -547,12 +547,14 @@ func CreateBranchBackOfficeAccount(c *gin.Context) {
 		ID:        id,
 		FirstName: request.FirstName,
 		// MiddleName  string `json:"middleName" gorm:""`
-		LastName: request.LastName,
-		Phone:    request.Phone,
-		Email:    request.Email,
-		Role:     request.Role,   // e.g., "Administrator", "Manager"
-		Branch:   request.Branch, // e.g., "Till 1"
-		Status:   request.Status,
+		LastName:          request.LastName,
+		Phone:             request.Phone,
+		Email:             request.Email,
+		Role:              request.Role,   // e.g., "Administrator", "Manager"
+		Branch:            request.Branch, // e.g., "Till 1"
+		Status:            request.Status,
+		Password:          request.Password,
+		UnharshedPassword: request.Password,
 	}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return

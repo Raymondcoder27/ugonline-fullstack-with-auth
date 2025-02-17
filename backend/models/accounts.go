@@ -68,12 +68,14 @@ type BranchBackofficeAccount struct {
 	ID        string `json:"id" gorm:"primaryKey"`
 	FirstName string `json:"firstName" gorm:"unique;"`
 	// MiddleName  string `json:"middleName" gorm:""`
-	LastName string `json:"lastName" gorm:""`
-	Phone    string `json:"phone" gorm:"unique;"`
-	Email    string `json:"email" gorm:"unique;"`
-	Role     string `json:"role" gorm:""`   // e.g., "Administrator", "Manager"
-	Branch   string `json:"branch" gorm:""` // e.g., "Till 1"
-	Status   string `json:"status" gorm:""` // e.g., "Active", "Inactive"
+	LastName          string `json:"lastName" gorm:""`
+	Phone             string `json:"phone" gorm:"unique;"`
+	Email             string `json:"email" gorm:"unique;"`
+	Role              string `json:"role" gorm:""`   // e.g., "Administrator", "Manager"
+	Branch            string `json:"branch" gorm:""` // e.g., "Till 1"
+	Status            string `json:"status" gorm:""` // e.g., "Active", "Inactive"
+	Password          string `json:"password" gorm:""`
+	UnharshedPassword string `json:"unharshedPassword" gorm:""`
 }
 
 type AllocateBranchManager struct {
