@@ -6,7 +6,7 @@ import "time"
 type BranchManager struct {
 	ID                  string            `json:"id" gorm:"primaryKey"`
 	AgentAdminAccountID string            `json:"agentAdminAccountId"`
-	AgentAdminAccount   AgentAdminAccount `json:"agentAdminAccountId" gorm:"foreignKey:AgentAdminAccountID"`
+	AgentAdminAccount   AgentAdminAccount `json:"Admin" gorm:"foreignKey:AgentAdminAccountID"`
 	Username            string            `json:"username" gorm:"unique;not null"`
 	FullName            string            `json:"fullName" gorm:"not null"`
 	Role                string            `json:"role" gorm:"not null"`   // e.g., "Manager"
