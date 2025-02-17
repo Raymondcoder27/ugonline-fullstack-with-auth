@@ -22,9 +22,6 @@ const loading: Ref<boolean> = ref(false);
 const emit = defineEmits(["cancel", "backOfficeAccountCreated"]);
 const store = useAccounts();
 
-
-
-
 // function submit() {
 //   loading.value = true
 //   store.createAccount(form)
@@ -157,7 +154,6 @@ function submit() {
           </div>
         </div>
       </div>
-      
 
       <!-- <div class="flex">
         <div class="cell-full">
