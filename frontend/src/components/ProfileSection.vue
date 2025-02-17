@@ -103,6 +103,7 @@ function logout() {
       loading.value = false;
       sessionStorage.clear();
       localStorage.clear();
+      console.log("About to reload");
       window.location.reload();
     })
     .catch((error: any) => {
