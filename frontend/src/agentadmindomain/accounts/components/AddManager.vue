@@ -63,7 +63,7 @@ function submit() {
     // role: form.role,
     branchId: form.branchId,
     role: form.role,
-    // adminId: 
+    adminId: findAdminId(),
   };
   loading.value = true;
   store.createBranchManagerAccount(payload); // Simply add the branch
