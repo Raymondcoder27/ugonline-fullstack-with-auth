@@ -84,7 +84,7 @@ export interface AddManager {
   branchId: string | null;
 }
 
-export interface ManagerAccount {
+export interface BranchManagerAccount {
   id: string;
   name: string;
   status: string;

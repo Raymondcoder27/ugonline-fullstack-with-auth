@@ -4,7 +4,7 @@ import api from "@/config/api";
 import { useBranchStore } from "@/agentadmindomain/branches/stores"; // Add this import
 import type {
   Account,
-  ManagerAccount,
+  BranchManagerAccount,
   BackOfficeAccount,
   AssignManager
 } from "@/types";
@@ -16,7 +16,7 @@ export const useAccounts = defineStore("user-management", () => {
 
   // State
   const backofficeAccounts: Ref<Account[]> = ref([]);
-  const managerAccounts: Ref<ManagerAccount[]> = ref([]);
+  const managerAccounts: Ref<BranchManagerAccount[]> = ref([]);
 
   // Back Office Accounts
   const addBackOfficeAccount = async (payload: BackOfficeAccount) => {

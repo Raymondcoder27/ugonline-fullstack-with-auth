@@ -9,7 +9,7 @@ import { useDebounceFn } from "@vueuse/core";
 import type {
   IResendVerificationPayload,
   TAccountVerificationType,
-  ManagerAccount,
+  BranchManagerAccount,
   Account,
 } from "./types";
 // import AddManager from "@/agentadmindomain/accounts/components/AddManager.vue";
@@ -20,7 +20,7 @@ import { useBranchStore } from "@/agentadmindomain/branches/stores"; // Updated 
 const editModalOpen: Ref<boolean> = ref(false);
 const viewModalOpen: Ref<boolean> = ref(false);
 
-function editManagerAccount(branchManagerAccount: ManagerAccount) {
+function editManagerAccount(branchManagerAccount: BranchManagerAccount) {
   localStorage.setItem(
     "branchManagerAccount",
     JSON.stringify(branchManagerAccount)
