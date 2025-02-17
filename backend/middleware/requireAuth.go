@@ -121,7 +121,8 @@ func RequireAuth(c *gin.Context) {
 		}
 
 		// Find the user with the token `sub`
-		var user models.BackofficeAccount
+		// var user models.BackofficeAccount
+		var user models.AgentAdminAccount
 		result := initializers.DB.First(&user, "id = ?", sub)
 		if result.Error != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{"message": "User not found"})

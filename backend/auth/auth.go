@@ -29,7 +29,8 @@ func Signup(c *gin.Context) {
 	// placeholderImagePath := "public/user-placeholder.png"
 
 	// user := models.BackofficeAccount{FirstName: body.FirstName, Email: body.Email, Password: string(hash)}
-	user := models.BackofficeAccount{Email: body.Email, Password: string(hash)}
+	// user := models.BackofficeAccount{Email: body.Email, Password: string(hash)}
+	user := models.AgentAdminAccount{Email: body.Email, Password: string(hash)}
 
 	result := initializers.DB.Create(&user)
 	if result.Error != nil {
