@@ -637,6 +637,13 @@ func CreateTillOperatorAccount(c *gin.Context) {
 	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 	// 	return
 	// }
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(request.Password), 10)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to hash password."})
+		return
+	}
+
 	// save request to database replacing the id with the generated uuid
 	if err := initializers.DB.Create(&models.TillOperator{
 		ID:        id,
@@ -647,6 +654,8 @@ func CreateTillOperatorAccount(c *gin.Context) {
 		Phone: request.Phone,
 		Till:  request.Till,
 		// Status:    request.Status,
+		Password:          string(hash),
+		UnharshedPassword: request.Password,
 	}).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
