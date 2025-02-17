@@ -80,10 +80,13 @@ watch(
       let targetRoute = "";
       if (userRole === "AgentAdmin") {
         targetRoute = "agent-admin-home";
+       localStorage.setItem("token", data.access_token);
       } else if (userRole === "BranchManager") {
         targetRoute = "branch-manager-home";
+       localStorage.setItem("token", data.access_token);
       } else if (userRole === "TillOperator") {
         targetRoute = "till-operator-home";
+       localStorage.setItem("token", data.access_token);
       } else {
         console.warn("Unknown user role:", userRole);
       }
