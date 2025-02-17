@@ -96,23 +96,32 @@ onMounted(() => {
     });
 });
 
+// function logout() {
+//   accountStore
+//     .logout()
+//     .then(() => {
+//       loading.value = false;
+//       sessionStorage.clear();
+//       localStorage.clear();
+//       console.log("About to reload");
+//       router.push({ name: "app-account-sign-in" });
+//       // window.location.reload();
+//     })
+//     .catch((error: any) => {
+//       loading.value = false;
+//       sessionStorage.clear();
+//       localStorage.clear();
+//       console.log(error);
+//     });
+// }
 function logout() {
-  accountStore
-    .logout()
-    .then(() => {
-      loading.value = false;
+      loading.value = true;
       sessionStorage.clear();
       localStorage.clear();
       console.log("About to reload");
       router.push({ name: "app-account-sign-in" });
       // window.location.reload();
-    })
-    .catch((error: any) => {
       loading.value = false;
-      sessionStorage.clear();
-      localStorage.clear();
-      console.log(error);
-    });
 }
 </script>
 

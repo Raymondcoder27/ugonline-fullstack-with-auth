@@ -22,6 +22,9 @@ const loading: Ref<boolean> = ref(false);
 const emit = defineEmits(["cancel", "backOfficeAccountCreated"]);
 const store = useAccounts();
 
+
+
+
 // function submit() {
 //   loading.value = true
 //   store.createAccount(form)
@@ -43,6 +46,8 @@ function submit() {
     phone: form.phone,
     // role: form.role,
     // branchId: form.branchId,
+    password: form.password,
+    unHarshedPassword: form.password,
   };
   loading.value = true;
   store.addBackOfficeAccount(payload); // Simply add the branch
@@ -137,8 +142,22 @@ function submit() {
               required
             />
           </div>
+          <div class="cell">
+            <label
+              class="block uppercase text-neutral-600 text-xs font-bold mb-1"
+              >Password</label
+            >
+            <input
+              autocomplete="off"
+              type="tel"
+              v-model="form.password"
+              class="noFocus form-element e-input w-full"
+              required
+            />
+          </div>
         </div>
       </div>
+      
 
       <!-- <div class="flex">
         <div class="cell-full">

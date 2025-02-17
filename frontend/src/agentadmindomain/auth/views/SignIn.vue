@@ -44,15 +44,61 @@ const validForm: ComputedRef<boolean> = computed(() => {
   return form.email.length > 0 && form.password.length >= 8
 })
 const { credentials } = useAuth()
+// watch(
+//   () => credentials.value,
+//   (data) => {
+//     if (data !== undefined) {
+//       router.push({ name: "agent-admin-home" })
+//     }
+//   },
+//   { deep: true }
+// )
+// watch(
+//   () => credentials.value,
+//   (data) => {
+//     if (data) {
+//       const userRole = data.role;
+//       if (userRole === "AgentAdmin") {
+//         router.push({ name: "agent-admin-home" });
+//       } else if (userRole === "BranchManager") {
+//         router.push({ name: "branch-manager-home" });
+//       } else if (userRole === "TillOperator") {
+//         router.push({ name: "till-operator-home" });
+//       } else {
+//         console.warn("Unknown user role:", userRole);
+//       }
+//     }
+//   },
+//   { deep: true }
+// );
+
 watch(
   () => credentials.value,
   (data) => {
-    if (data !== undefined) {
-      router.push({ name: "agent-admin-home" })
+    if (data) {
+      const userRole = data.role;
+      let targetRoute = "";
+      if (userRole === "AgentAdmin") {
+        targetRoute = "agent-admin-home";
+      } else if (userRole === "BranchManager") {
+        targetRoute = "branch-manager-home";
+      } else if (userRole === "TillOperator") {
+        targetRoute = "till-operator-home";
+      } else {
+        console.warn("Unknown user role:", userRole);
+      }
+      if (targetRoute) {
+        router.push({ name: targetRoute }).then(() => {
+          // Reload the page after navigation completes
+          window.location.reload();
+        });
+      }
     }
   },
   { deep: true }
-)
+);
+
+
 </script>
 
 <template>

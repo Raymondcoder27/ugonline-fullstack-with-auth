@@ -383,74 +383,156 @@ func Validate(c *gin.Context) {
 //			},
 //		})
 //	}
+
+// func GetProfile(c *gin.Context) {
+// 	// Extract user ID from middleware
+// 	userID, exists := c.Get("userId")
+// 	if !exists {
+// 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
+// 		return
+// 	}
+
+// 	// Fetch user from DB
+// 	// var user models.BackofficeAccount
+// 	var user models.AgentAdminAccount
+// 	result := initializers.DB.First(&user, "id = ?", userID)
+// 	if result.Error != nil {
+// 		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+// 		return
+// 	}
+
+// 	// Fetch active sessions (assuming you have a `Session` model)
+// 	var sessions []models.Session
+// 	initializers.DB.Where("user_id = ? AND active = ?", userID, true).Find(&sessions)
+
+// 	// Map sessions and their devices
+// 	sessionData := []gin.H{}
+// 	for _, session := range sessions {
+// 		var devices []models.Device
+// 		initializers.DB.Where("session_id = ?", session.ID).Find(&devices)
+
+// 		deviceData := []gin.H{}
+// 		for _, device := range devices {
+// 			deviceData = append(deviceData, gin.H{
+// 				"id":             device.ID,
+// 				"sessionID":      device.SessionID,
+// 				"ipAddress":      device.IPAddress,
+// 				"userAgent":      device.UserAgent,
+// 				"createdAt":      device.CreatedAt,
+// 				"lastActivityAt": device.LastActivityAt,
+// 			})
+// 		}
+
+// 		sessionData = append(sessionData, gin.H{
+// 			"id":        session.ID,
+// 			"active":    session.Active,
+// 			"issuedAt":  session.IssuedAt,
+// 			"expiresAt": session.ExpiresAt,
+// 			"devices":   deviceData,
+// 		})
+// 	}
+
+// 	// Construct response
+// 	response := gin.H{
+// 		"success": true,
+// 		"type":    "*db.UserInfo",
+// 		"data": gin.H{
+// 			"id": user.ID,
+// 			// "username":  user.Email, // Assuming username is the email
+// 			"phone":     user.Phone,
+// 			"role":      user.Role,
+// 			"firstName": user.FirstName,
+// 			"lastName":  user.LastName,
+// 			// "emailVerified": user.EmailVerified,
+// 			// "activatedAt":   user.ActivatedAt,
+// 			// "phoneVerified": user.PhoneVerified,
+// 			// "createdAt":     user.CreatedAt,
+// 			"email":    user.Email,
+// 			"sessions": sessionData,
+// 		},
+// 		"time": time.Now().Unix(),
+// 	}
+
+// 	c.JSON(http.StatusOK, response)
+// }
+
 func GetProfile(c *gin.Context) {
-	// Extract user ID from middleware
+	// Extract user ID and role from the context
 	userID, exists := c.Get("userId")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorized"})
 		return
 	}
-
-	// Fetch user from DB
-	// var user models.BackofficeAccount
-	var user models.AgentAdminAccount
-	result := initializers.DB.First(&user, "id = ?", userID)
-	if result.Error != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+	roleVal, exists := c.Get("role")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Role not found"})
+		return
+	}
+	role, ok := roleVal.(string)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Invalid role type"})
 		return
 	}
 
-	// Fetch active sessions (assuming you have a `Session` model)
-	var sessions []models.Session
-	initializers.DB.Where("user_id = ? AND active = ?", userID, true).Find(&sessions)
+	var responseData gin.H
 
-	// Map sessions and their devices
-	sessionData := []gin.H{}
-	for _, session := range sessions {
-		var devices []models.Device
-		initializers.DB.Where("session_id = ?", session.ID).Find(&devices)
-
-		deviceData := []gin.H{}
-		for _, device := range devices {
-			deviceData = append(deviceData, gin.H{
-				"id":             device.ID,
-				"sessionID":      device.SessionID,
-				"ipAddress":      device.IPAddress,
-				"userAgent":      device.UserAgent,
-				"createdAt":      device.CreatedAt,
-				"lastActivityAt": device.LastActivityAt,
-			})
+	// Query the appropriate table based on the user's role
+	switch role {
+	case "AgentAdmin":
+		var user models.AgentAdminAccount
+		result := initializers.DB.First(&user, "id = ?", userID)
+		if result.Error != nil {
+			c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+			return
 		}
-
-		sessionData = append(sessionData, gin.H{
-			"id":        session.ID,
-			"active":    session.Active,
-			"issuedAt":  session.IssuedAt,
-			"expiresAt": session.ExpiresAt,
-			"devices":   deviceData,
-		})
-	}
-
-	// Construct response
-	response := gin.H{
-		"success": true,
-		"type":    "*db.UserInfo",
-		"data": gin.H{
-			"id": user.ID,
-			// "username":  user.Email, // Assuming username is the email
+		responseData = gin.H{
+			"id":        user.ID,
+			"email":     user.Email,
+			"role":      role,
 			"phone":     user.Phone,
-			"role":      user.Role,
 			"firstName": user.FirstName,
 			"lastName":  user.LastName,
-			// "emailVerified": user.EmailVerified,
-			// "activatedAt":   user.ActivatedAt,
-			// "phoneVerified": user.PhoneVerified,
-			// "createdAt":     user.CreatedAt,
-			"email":    user.Email,
-			"sessions": sessionData,
-		},
-		"time": time.Now().Unix(),
+		}
+	case "BranchManager":
+		var user models.BranchManagers // adjust model name as needed
+		result := initializers.DB.First(&user, "id = ?", userID)
+		if result.Error != nil {
+			c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+			return
+		}
+		responseData = gin.H{
+			"id":        user.ID,
+			"email":     user.Email,
+			"role":      role,
+			"phone":     user.Phone,
+			"firstName": user.FirstName,
+			"lastName":  user.LastName,
+		}
+	case "TillOperator":
+		var user models.TillOperator // adjust model name as needed
+		result := initializers.DB.First(&user, "id = ?", userID)
+		if result.Error != nil {
+			c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})
+			return
+		}
+		responseData = gin.H{
+			"id":        user.ID,
+			"email":     user.Email,
+			"role":      role,
+			"phone":     user.Phone,
+			"firstName": user.FirstName,
+			"lastName":  user.LastName,
+		}
+	default:
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Invalid role"})
+		return
 	}
 
-	c.JSON(http.StatusOK, response)
+	// Return the consolidated profile response
+	c.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"type":    "*db.UserInfo",
+		"data":    responseData,
+		"time":    time.Now().Unix(),
+	})
 }

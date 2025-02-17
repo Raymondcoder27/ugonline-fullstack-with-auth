@@ -23,6 +23,7 @@ const servicesStore = useServicesStore();
 const accountStore = useAccounts();
 branchStore.fetchBranches();
 // servicesStore.fetchSubscribedServices();
+// accountStore.fetchBranchManagers();
 accountStore.fetchBranchManagers();
 accountStore.fetchBackofficeAccounts();
 const totalServiceSubscriptions = servicesStore.subscribedServices?.length || 0;

@@ -36,33 +36,33 @@ export const useAccountStore = defineStore("accounts", () => {
     })
   }
 
-  // const fetchProfile = async () => {
-  //   return api.get("/auth/profile").then((response: any) => {
-  //     profile.value = response.data.data
-  //   })
-  // }
-   
-
   const fetchProfile = async () => {
     return api.get("/auth/profile").then((response: any) => {
       profile.value = response.data.data
-
-      // redirect to the right dashboard using the role
-      if (!profile.value) {
-        console.error("Profile is undefined")
-        return
-      }
-  
-      // Now safely access profile.value.role
-      if (profile.value.role === "AgentAdmin") {
-        router.push({ name: "agent-admin-home" })
-      } else if (profile.value.role === "BranchManager") {
-        router.push({ name: "branch-manager-home" })
-      } else if (profile.value.role === "TillOperator") {
-        router.push({ name: "till-operator-home" })
-      }
     })
   }
+   
+
+  // const fetchProfile = async () => {
+  //   return api.get("/auth/profile").then((response: any) => {
+  //     profile.value = response.data.data
+
+  //     // redirect to the right dashboard using the role
+  //     if (!profile.value) {
+  //       console.error("Profile is undefined")
+  //       return
+  //     }
+  
+  //     // Now safely access profile.value.role
+  //     if (profile.value.role === "AgentAdmi") {
+  //       router.push({ name: "agent-admin-home" })
+  //     } else if (profile.value.role === "BranchManager") {
+  //       router.push({ name: "branch-manager-home" })
+  //     } else if (profile.value.role === "TillOperator") {
+  //       router.push({ name: "till-operator-home" })
+  //     }
+  //   })
+  // }
 
 
   const verify = async () => {
