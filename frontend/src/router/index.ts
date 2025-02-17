@@ -198,37 +198,30 @@ const router = createRouter({
 //     next();
 //   }
 // });
+
+// Global route guard
+// router.beforeEach((to, from, next) => {
+//   const { credentials, refreshToken } = useAuth();
+
+//   if (to.meta.requiresAuth) {
+//     if (!credentials.value || !refreshToken.value || refreshToken.value.exp < moment().unix()) {
+//       next({ name: "app-account-sign-in" });
+//     } else {
+//       next();
+//     }
+//   } 
+// });
+
+// Navigation Guard
 router.beforeEach((to, from, next) => {
-  const { credentials, refreshToken } = useAuth();
+  const isAuthenticated = !!localStorage.getItem('token'); // Check for token
 
-  // Check if the route requires authentication
-  if (to.meta.requiresAuth) {
-    if (
-      !credentials.value ||
-      !refreshToken.value ||
-      refreshToken.value.exp < moment().unix()
-    ) {
-      return next({ name: "app-account-sign-in" });
-    }
+  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+    // If the route requires auth and user is not authenticated
+    next({ name: 'app-account-sign-in' }); // Redirect to login
+  } else {
+    next(); // Proceed to the route
   }
-
-  // If the user is trying to access the sign in page but already logged in,
-  // redirect based on the role stored in credentials.
-  if (to.name === "app-account-sign-in" && credentials.value && refreshToken.value) {
-    // Check if role exists in credentials
-    const userRole = credentials.value.role;
-    if (userRole === "AgentAdmin") {
-      return next({ name: "agent-admin-home" });
-    } else 
-    if (userRole === "BranchManager") {
-      return next({ name: "branch-manager-home" });
-    } else if (userRole === "TillOperator") {
-      return next({ name: "till-operator-home" });
-    }
-  }
-
-  // For all other routes, continue as normal
-  next();
 });
 
 
