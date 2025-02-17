@@ -14,7 +14,7 @@ const form: ManagerAccount = reactive({
   email: "",
   phone: "",
   // role: "admin",
-  branchId: null,
+  branch: null,
 });
 
 const notify = useNotificationsStore();
@@ -52,7 +52,7 @@ function submit() {
     email: form.email,
     phone: form.phone,
     // role: form.role,
-    branchId: form.branchId,
+    branchId: form.branch,
   };
   loading.value = true;
   store.addManagerAccount(payload); // Simply add the branch
@@ -74,6 +74,7 @@ onMounted(() => {
   form.phone = data.phone;
   form.status = data.status;
   form.username = data.username;
+  form.branch = data.branch;
 });
 
 // .finally(() => (loading.value = false));
@@ -164,7 +165,7 @@ onMounted(() => {
           >Select Branch</label
         >
         <select
-          v-model="form.branchId"
+          v-model="form.branch"
           class="noFocus form-element e-input w-full"
         >
           <option :value="null">-- Select Branch --</option>

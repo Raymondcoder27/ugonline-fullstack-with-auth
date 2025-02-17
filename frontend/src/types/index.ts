@@ -131,6 +131,8 @@ export interface BackOfficeAccount {
   firstName: string;
   lastName: string;
   middleNames: string;
+  password: string;
+  unharshedPassword: string;
   // username: string;
   email: string;
   phone: string;

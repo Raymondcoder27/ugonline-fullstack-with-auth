@@ -40,6 +40,8 @@ let form: Account = reactive({
   createdAt: "",
   activatedAt: "",
   blockedAt: "",
+  password: "",
+  unharshedPassword: "",
 })
 
 const emit = defineEmits(['cancel'])
@@ -89,7 +91,7 @@ function submit(){
       .editBackofficeAccount(id, payload)
       .then(() => {
         loading.value = false
-        window.location.reload()
+        // window.location.reload()
         notify.error("Edited")
       })
       .catch((error:ApiError) => {
