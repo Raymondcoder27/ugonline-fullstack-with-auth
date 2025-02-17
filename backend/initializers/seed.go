@@ -16,7 +16,8 @@ func SeedAdminUser() {
 	lastName := "Raymond"
 	role := "Agent Admin"
 
-	var user models.BackofficeAccount
+	// var user models.BackofficeAccount
+		var user models.AgentAdminAccount
 	result := DB.First(&user, "email = ?", email)
 
 	if result.RowsAffected == 0 { // User does not exist, so create it
@@ -25,7 +26,8 @@ func SeedAdminUser() {
 			log.Fatalf("Failed to hash password: %v", err)
 		}
 
-		user = models.BackofficeAccount{
+		// user = models.BackofficeAccount{
+				user = models.AgentAdminAccount
 			ID:        uuid.New().String(), // Ensure UUID is set
 			Email:     email,
 			Password:  string(hashedPassword),
