@@ -33,7 +33,7 @@ func main() {
 
 	r.POST("/register", auth.Signup)
 	r.POST("/auth/login", auth.Login)
-	r.POST("/auth/branch-manager-login", auth.BranchManagerLogin)
+	// r.POST("/auth/branch-manager-login", auth.BranchManagerLogin)
 	r.GET("/auth/profile", middleware.RequireAuth, auth.GetProfile)
 	r.GET("/validate", middleware.RequireAuth, auth.Validate)
 

@@ -437,6 +437,8 @@ export const useAccounts = defineStore("user-management", () => {
         createdAt: new Date().toISOString(),
         emailVerified: true,
         phoneVerified: true,
+        password: user.password,
+        unharshedPassword: user.password,
         activatedAt: new Date().toISOString(),
         till: till.name, // Include branchId
       });
