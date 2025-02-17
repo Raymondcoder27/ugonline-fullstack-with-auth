@@ -59,10 +59,10 @@ type AgentAdminAccount struct {
 	// Branch            string `json:"branch" gorm:""` // e.g., "Till 1"
 	// Branch *Branch `json:"branch" gorm:"foreignKey:BranchID"`
 	// Manager           BranchManager `json:"manager" gorm:"foreignKey:ManagerID"`
-	Managers          []*BranchManager `json:"managers" gorm:"foreignKey:AgentAdminAccountID"`
-	Status            string           `json:"status" gorm:""` // e.g., "Active", "Inactive"
-	Password          string           `json:"password" gorm:""`
-	UnharshedPassword string           `json:"unharshedPassword" gorm:""`
+	Managers          []*BranchManagers `json:"managers" gorm:"foreignKey:AgentAdminAccountID"`
+	Status            string            `json:"status" gorm:""` // e.g., "Active", "Inactive"
+	Password          string            `json:"password" gorm:""`
+	UnharshedPassword string            `json:"unharshedPassword" gorm:""`
 }
 
 // BackofficeAccount represents a user who manages back-office operations.
@@ -100,4 +100,5 @@ type BranchManagers struct {
 	Branch              string             `json:"branch" gorm:""`
 	Password            string             `json:"password" gorm:""`
 	UnharshedPassword   string             `json:"unharshedPassword" gorm:""`
+	TillOperator        []*TillOperator    `json:"tillOperator" gorm:"foreignKey:BranchManagerID"`
 }
