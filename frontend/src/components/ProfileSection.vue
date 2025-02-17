@@ -115,9 +115,6 @@ function logout() {
 }
 </script>
 
-<!-- -->
-
-
 <template>
   <!-- Desktop Menu: Centered Horizontally -->
   <div v-if="!isMobile" class="flex justify-center w-full">
