@@ -148,7 +148,8 @@ func Login(c *gin.Context) {
 	}
 
 	// Look up user by email
-	var user models.BackofficeAccount
+	// var user models.BackofficeAccount
+	var user models.AgentAdminAccount
 	initializers.DB.First(&user, "email = ?", body.Email)
 
 	if user.ID == "" {
@@ -245,7 +246,8 @@ func GetProfile(c *gin.Context) {
 	}
 
 	// Fetch user from DB
-	var user models.BackofficeAccount
+	// var user models.BackofficeAccount
+	var user models.AgentAdminAccount
 	result := initializers.DB.First(&user, "id = ?", userID)
 	if result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "User not found"})

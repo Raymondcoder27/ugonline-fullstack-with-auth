@@ -53,11 +53,12 @@ type AgentAdminAccount struct {
 	Role     string `json:"role" gorm:""` // e.g., "Administrator", "Manager"
 	Till     string `json:"till" gorm:""` // e.g., "Till 1"
 	// Branch            string `json:"branch" gorm:""` // e.g., "Till 1"
-	Branch            Branch        `json:"branch" gorm:"foreignKey:BranchID"`
-	Manager           BranchManager `json:"manager" gorm:"foreignKey:ManagerID"`
-	Status            string        `json:"status" gorm:""` // e.g., "Active", "Inactive"
-	Password          string        `json:"password" gorm:""`
-	UnharshedPassword string        `json:"unharshedPassword" gorm:""`
+	Branch Branch `json:"branch" gorm:"foreignKey:BranchID"`
+	// Manager           BranchManager `json:"manager" gorm:"foreignKey:ManagerID"`
+	Managers          []*BranchManager `json:"managers" gorm:"foreignKey:AgentAdminAccountID"`
+	Status            string           `json:"status" gorm:""` // e.g., "Active", "Inactive"
+	Password          string           `json:"password" gorm:""`
+	UnharshedPassword string           `json:"unharshedPassword" gorm:""`
 }
 
 // BackofficeAccount represents a user who manages back-office operations.
