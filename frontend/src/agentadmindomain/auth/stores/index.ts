@@ -1,5 +1,6 @@
 import api from "@/config/api"
 import { useStorage, type RemovableRef } from "@vueuse/core"
+import router from "@/router"
 import { defineStore } from "pinia"
 import type {
   SignInPayloadInterface,
@@ -11,6 +12,7 @@ import type {
   SignUpResponseInterface, UserProfileInterface
 } from "@/agentadmindomain/auth/types"
 import { ref, type Ref } from "vue"
+
 
 export const useAccountStore = defineStore("accounts", () => {
   const profile: Ref<UserProfileInterface | undefined> = ref()
@@ -34,52 +36,28 @@ export const useAccountStore = defineStore("accounts", () => {
     })
   }
 
+  // const fetchProfile = async () => {
+  //   return api.get("/auth/profile").then((response: any) => {
+  //     profile.value = response.data.data
+  //   })
+  // }
+   
+
   const fetchProfile = async () => {
     return api.get("/auth/profile").then((response: any) => {
       profile.value = response.data.data
+
+      // redirect to the right dashboard using the role
+      if (profile.value.role === "AgentAdmin") {
+        router.push({ name: "agent-admin-home" })
+      } else if (profile.value.role === "BranchManager") {
+        router.push({ name: "branch-manager-home" })
+      }
+      else if (profile.value.role === "TillOperator") {
+        router.push({ name: "till-operator-home" })
+      }
     })
   }
-  // const fetchProfile = async () => {
-  //   const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-
-  //   if (!token) {
-  //     console.error("No token found");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await api.get("/auth/profile", {
-  //       headers: {
-  //         "Authorization": `Bearer ${token}`,
-  //         "Content-Type": "application/json"
-  //       }
-  //     });
-  //     profile.value = response.data.data;
-  //   } catch (error) {
-  //     console.error("Error fetching profile:", error);
-  //   }
-  // };
-
-
-  // const fetchProfile = async () => {
-  //   const storedData = storageCredentials.value ? JSON.parse(storageCredentials.value) : null
-  //   const token = storedData?.token
-
-  //   if (!token) {
-  //     console.error("No token found in storageCredentials")
-  //     return
-  //   }
-
-  //   return api.get("/auth/profile", {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`
-  //     }
-  //   }).then((response: any) => {
-  //     profile.value = response.data.data
-  //   }).catch((error) => {
-  //     console.error("Profile fetch failed:", error.response.data)
-  //   })
-  // }
 
 
   const verify = async () => {

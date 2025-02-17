@@ -5,6 +5,7 @@ import (
 
 	"example.com/ugonlinemergeserver/initializers"
 	"example.com/ugonlinemergeserver/models" // Replace with your actual models package
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -586,6 +587,12 @@ func CreateBranchManagerAccount(c *gin.Context) {
 		return
 	}
 
+	hash, err := bcrypt.GenerateFromPassword([]byte(request.Password), 10)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Failed to hash password."})
+		return
+	}
+
 	// save request to database replacing the id with the generated uuid
 	if err := initializers.DB.Create(&models.BranchManagers{
 		ID:        id,
@@ -597,7 +604,7 @@ func CreateBranchManagerAccount(c *gin.Context) {
 		AgentAdminAccountID: adminID.(string),
 		Phone:               request.Phone,
 		Branch:              request.Branch,
-		Password:            request.Password,
+		Password:            string(hash),
 		UnharshedPassword:   request.Password,
 		// Status:    request.Status,
 	}).Error; err != nil {

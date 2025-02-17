@@ -57,6 +57,7 @@ export interface UserProfileInterface {
   emailVerified: boolean
   phoneVerified: boolean
   email:string
+  role: string
   createdAt: string
   sessions: SessionInterface[]
 }

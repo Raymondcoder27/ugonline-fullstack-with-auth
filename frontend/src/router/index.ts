@@ -116,7 +116,7 @@ const mergedRoutes: RouteRecordRaw[] = [
   },
   {
     path: "/till-operator",
-    name: "app-home2",
+    name: "till-operator-home",
     component: AgentLayout,
     // meta: { requiresAuth: false },
     meta: { requiresAuth: true },
