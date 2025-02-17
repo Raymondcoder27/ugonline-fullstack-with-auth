@@ -17,6 +17,7 @@ const branchStore = useBranchStore();
   phone: "",
   role: "Branch Manager",
   branchId: null, 
+  // adminId: ""
 })
 
 const notify = useNotificationsStore()
@@ -47,6 +48,11 @@ const store = useAccounts()
 //   loading.value = false;
 // }
 
+const findAdminId = () => {
+  const admin = store.backofficeAccounts.find((account) => account.role === "Agent Admin");
+  return admin?.id;
+};
+
 
 function submit() {
   let payload = {
@@ -56,7 +62,8 @@ function submit() {
     phone: form.phone,
     // role: form.role,
     branchId: form.branchId,
-    role: form.role
+    role: form.role,
+    // adminId: 
   };
   loading.value = true;
   store.createBranchManagerAccount(payload); // Simply add the branch
