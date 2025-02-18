@@ -196,7 +196,7 @@ export const useBilling = defineStore("billing", () => {
 
   async function fetchFloatRequestsToAdmin() {
     try {
-      const { data } = await api.get("/till-operator/float-requests");
+      const { data } = await api.get("/branch-manager/float-requests");
   
       // Get branch from localStorage
       const storedAccount = localStorage.getItem("branchManagerAccount");
