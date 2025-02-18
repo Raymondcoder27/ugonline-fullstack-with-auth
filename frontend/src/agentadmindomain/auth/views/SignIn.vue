@@ -93,7 +93,7 @@ watch(
       if (targetRoute) {
         router.push({ name: targetRoute }).then(() => {
           // Reload the page after navigation completes
-          window.location.reload();
+          // window.location.reload();
         });
       }
     }
