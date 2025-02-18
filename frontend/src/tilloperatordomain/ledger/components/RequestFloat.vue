@@ -17,7 +17,16 @@ const emit = defineEmits(["cancel", "floatAllocated"]);
 const store = useAccounts();
 
 
-const form: RequestFloat = reactive({
+// const form: RequestFloat = reactive({
+//   // email: "",
+//   phone: "",
+//   amount: "",
+//   till: "",
+//   description: "",
+//   requestDate: new Date(),
+//   status: "pending",
+// });
+let form: RequestFloat = reactive({
   // email: "",
   phone: "",
   amount: "",

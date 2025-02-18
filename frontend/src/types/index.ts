@@ -226,7 +226,7 @@ export interface IErrorResponse {
 
 export interface RequestFloat {
   amount:number
-  till:number
+  till:string
   branch:string
   description: string
 }
