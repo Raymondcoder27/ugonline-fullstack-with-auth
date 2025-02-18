@@ -10,12 +10,10 @@ import { useBalance } from "@/tilloperatordomain/balance/stores";
 const billingStore = useBilling();
 const balanceStore = useBalance();
 
-
 const notify = useNotificationsStore();
 const loading: Ref<boolean> = ref(false);
 const emit = defineEmits(["cancel", "floatAllocated"]);
 const store = useAccounts();
-
 
 // const form: RequestFloat = reactive({
 //   // email: "",
@@ -45,7 +43,6 @@ onMounted(() => {
   }
 });
 
-
 function submit() {
   const payload = {
     // email: form.email, // Include email
@@ -57,7 +54,7 @@ function submit() {
   console.log("Submitting payload:", payload);
 
   loading.value = true;
-  billingStore.requestFloat(payload)
+  billingStore.requestFloat(payload);
   balanceStore.increaseTotalBalance(payload.amount); // Update balance
   emit("floatAllocated");
   loading.value = false;
