@@ -20,20 +20,27 @@ const balanceStore = useBalance();
 // localstorage.getItem("branchManagerAccount");
 
 
-let form: FloatRequest = reactive({
-  // firstName: "",
-  // lastName: "",
-  // middleName: "",
-  // role: "admin",
-  // username: "",
+const form: FloatRequest = reactive({
+  email: "",
   phone: "",
-  // amount: 0,
-  branch: form2.branch,
-  // description: "",
+  amount: 0,
+  branch: "",
+  description: "",
   requestDate: new Date(),
-  // tillId: "till-001",
   status: "pending",
 });
+
+
+onMounted(() => {
+  const data = JSON.parse(<string>localStorage.getItem("branchManagerAccount"));
+
+  if (data) {
+    form.email = data.email;
+    form.branch = data.branch;
+  }
+});
+
+
 const notify = useNotificationsStore();
 const loading: Ref<boolean> = ref(false);
 const emit = defineEmits(["cancel", "requestSubmitted"]);
@@ -53,32 +60,19 @@ const emit = defineEmits(["cancel", "requestSubmitted"]);
 
 function submit() {
   const payload = {
+    email: form.email, // Include email
     amount: form.amount,
     branch: form.branch,
     description: form.description,
     status: form.status,
   };
-
   console.log("Submitting payload:", payload);
 
   loading.value = true;
   billingStore.requestFloatToAdmin(payload); // API call to allocate float
-  // .then(() => {
-  // billingStore.adjustFloatLedger(payload); // Adjust ledger
-  // balanceStore.decreaseTotalBalance(payload.amount); // Update balance
-  // balanceStore.increaseTotalBalance(payload.amount); // Update balance
-  // notify.success(`Float allocated to branch: ${form.branchId}`);
-  notify.success(`Float request submitted successfully.`);
+  notify.success(`Float request submitted successfully for branch ${form.branch}.`);
   emit("requestSubmitted");
   loading.value = false;
-  // })
-  // .catch((err) => {
-  // console.error("Error allocating float:", err);
-  // notify.error("Failed to allocate float.");
-  // })
-  // .finally(() => {
-  // loading.value = false;
-  // });
 }
 
 //watch amount being typed and display the amount the span below
