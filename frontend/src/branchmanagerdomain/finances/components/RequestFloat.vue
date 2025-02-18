@@ -28,7 +28,7 @@ let form: FloatRequest = reactive({
   // username: "",
   phone: "",
   // amount: 0,
-  branch: "Branch 1",
+  branch: form2.branch,
   // description: "",
   requestDate: new Date(),
   // tillId: "till-001",
@@ -93,14 +93,14 @@ onMounted(() => {
   //   let data = JSON.parse(<string>localStorage.getItem("provider"))
   let data = JSON.parse(<string>localStorage.getItem("branchManagerAccount"));
 
-  form.name = data.name;
-  form.firstName = data.firstName;
-  form.lastName = data.lastName;
-  form.middleNames = data.middleNames;
+  // form.name = data.name;
+  // form.firstName = data.firstName;
+  // form.lastName = data.lastName;
+  // form.middleNames = data.middleNames;
   form.email = data.email;
-  form.phone = data.phone;
-  form.status = data.status;
-  form.username = data.username;
+  // form.phone = data.phone;
+  // form.status = data.status;
+  // form.username = data.username;
   form.branch = data.branch;
 });
 </script>
