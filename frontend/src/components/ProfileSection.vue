@@ -196,7 +196,7 @@ let showMenu = ref(false);
                 <span @click="logout">View Till Details</span>
               </button>
               <div class="text-xs font-semi-bold p-2 pt-3 border-t mt-2">
-                Privacy . Terms . Advertising . AdChoices . Cookies . Meta
+                Ugonline . Terms . Business . About . Privacy
               </div>
             </div>
             <p class="text-sm font-bold">
