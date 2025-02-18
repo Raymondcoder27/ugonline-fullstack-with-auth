@@ -70,7 +70,7 @@ function submit() {
 
   loading.value = true;
   billingStore.requestFloatToAdmin(payload); // API call to allocate float
-  notify.success(`Float request submitted successfully for branch ${form.branch}.`);
+  notify.success(`Float request submitted successfully for ${form.branch}.`);
   emit("requestSubmitted");
   loading.value = false;
 }
