@@ -454,6 +454,7 @@ export const useBilling = defineStore("billing", () => {
           // ...ledgerEntry, // Retain all original fields
           status: "edited", // Only update status
           amount: payload.amount,
+          description: payload.description,
         });
 
         // console.log("Float ledger record edited:", ledgerEntry);

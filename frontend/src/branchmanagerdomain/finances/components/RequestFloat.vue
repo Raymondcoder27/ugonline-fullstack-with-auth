@@ -23,7 +23,7 @@ const balanceStore = useBalance();
 const form: FloatRequest = reactive({
   email: "",
   phone: "",
-  amount: 0,
+  amount: "",
   branch: "",
   description: "",
   requestDate: new Date(),
