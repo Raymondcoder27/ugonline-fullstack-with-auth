@@ -19,7 +19,6 @@ const balanceStore = useBalance();
 
 // localstorage.getItem("branchManagerAccount");
 
-
 const form: FloatRequest = reactive({
   email: "",
   phone: "",
@@ -30,7 +29,6 @@ const form: FloatRequest = reactive({
   status: "pending",
 });
 
-
 onMounted(() => {
   const data = JSON.parse(<string>localStorage.getItem("branchManagerAccount"));
 
@@ -39,7 +37,6 @@ onMounted(() => {
     form.branch = data.branch;
   }
 });
-
 
 const notify = useNotificationsStore();
 const loading: Ref<boolean> = ref(false);
