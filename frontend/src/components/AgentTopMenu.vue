@@ -210,7 +210,7 @@ function logout() {
               }}</span>
             </div>
           </div>
-
+<!-- 
           <div class="flex items-center space-x-4">
             <i class="fa-solid fa-user text-xl"></i>
             <p class="text-sm font-bold">
@@ -228,7 +228,7 @@ function logout() {
                 <div></div>
               </span>
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
     </Transition>

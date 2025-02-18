@@ -123,6 +123,10 @@ function logout() {
       // window.location.reload();
       loading.value = false;
 }
+
+const viewprofile = () => {
+  router.push({ name: "app-profile" });
+};
 </script>
 
 <template>
@@ -153,7 +157,7 @@ function logout() {
           <!-- User Profile and Logout Section -->
 
           <div class="flex items-center space-x-4">
-            <i class="fa-solid fa-user text-xl"></i>
+            <i class="fa-solid fa-user text-xl cursor-pointer" @click="viewprofile"></i>
             <p class="text-sm font-bold">
               {{ accountStore.profile?.firstName }}
             </p>
@@ -214,6 +218,8 @@ function logout() {
       </div>
     </Transition>
   </div>
+
+  <!-- small modal for profile editing -->
 </template>
 
 
