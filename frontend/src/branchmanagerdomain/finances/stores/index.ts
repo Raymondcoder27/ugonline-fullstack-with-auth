@@ -188,38 +188,38 @@ export const useBilling = defineStore("billing", () => {
     console.log("Float Requests:", floatRequests.value);
   }
 
-  // async function fetchFloatRequestsToAdmin() {
-  //   const { data } = await api.get("/branch-manager/float-requests");
-  //   floatRequestsToAdmin.value = data.data;
-  //   console.log("Float Requests:", floatRequestsToAdmin.value);
-  // }
-
   async function fetchFloatRequestsToAdmin() {
-    try {
-      const { data } = await api.get("/branch-manager/float-requests");
-
-      // Get branch from localStorage
-      const storedAccount = localStorage.getItem("branchManagerAccount");
-      if (storedAccount) {
-        const account = JSON.parse(storedAccount);
-        const userBranch = account.branch;
-
-        // Filter requests by matching branch
-        floatRequestsToAdmin.value = data.data.filter(
-          (request: FloatRequest) => request.branch === userBranch
-        );
-
-        // Log the filtered requests to check if the filtering is working
-        console.log("Filtered Float Requests:", floatRequestsToAdmin.value);
-      } else {
-        console.error("No branch manager account found in localStorage");
-        floatRequestsToAdmin.value = [];
-      }
-    } catch (error) {
-      console.error("Error fetching float requests:", error);
-      floatRequestsToAdmin.value = [];
-    }
+    const { data } = await api.get("/branch-manager/float-requests");
+    floatRequestsToAdmin.value = data.data;
+    console.log("Float Requests:", floatRequestsToAdmin.value);
   }
+
+  // async function fetchFloatRequestsToAdmin() {
+  //   try {
+  //     const { data } = await api.get("/branch-manager/float-requests");
+
+  //     // Get branch from localStorage
+  //     const storedAccount = localStorage.getItem("branchManagerAccount");
+  //     if (storedAccount) {
+  //       const account = JSON.parse(storedAccount);
+  //       const userBranch = account.branch;
+
+  //       // Filter requests by matching branch
+  //       floatRequestsToAdmin.value = data.data.filter(
+  //         (request: FloatRequest) => request.branch === userBranch
+  //       );
+
+  //       // Log the filtered requests to check if the filtering is working
+  //       console.log("Filtered Float Requests:", floatRequestsToAdmin.value);
+  //     } else {
+  //       console.error("No branch manager account found in localStorage");
+  //       floatRequestsToAdmin.value = [];
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching float requests:", error);
+  //     floatRequestsToAdmin.value = [];
+  //   }
+  // }
 
 
   async function requestFloatToAdmin(payload: RequestFloatToAdmin) {
