@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { RequestFloat } from "@/types";
-import { type Ref, ref, reactive, watch } from "vue";
+import { type Ref, ref, reactive, watch, onMounted } from "vue";
 import { useAccounts } from "@/tilloperatordomain/accounts/stores";
 import { useNotificationsStore } from "@/stores/notifications";
 import { defineEmits } from "vue";
@@ -10,66 +10,48 @@ import { useBalance } from "@/tilloperatordomain/balance/stores";
 const billingStore = useBilling();
 const balanceStore = useBalance();
 
-// const form: RequestFloat = reactive({
-//   amount: "",
-//   branchId: "",
-//   description: "",
-// });
 
-let form: RequestFloat = reactive({
-  // firstName: "",
-  // lastName: "",
-  // middleName: "",
-  // role: "admin",
-  // username: "",
-  amount: "",
-  till: "Till 1",
-  // phone: "",
-  description: "",
-});
 const notify = useNotificationsStore();
 const loading: Ref<boolean> = ref(false);
 const emit = defineEmits(["cancel", "floatAllocated"]);
 const store = useAccounts();
-// function submit() {
-//   loading.value = true
-//   store.RequestFloat(form)
-//     .then(() => {
-//       loading.value = false
-//       notify.success(`An account verification email has been sent to ${form.username.toLowerCase()}.`)
-//       emit("cancel")
-//     })
-//     .catch(() => {
-//       loading.value = false
-//     })
-// }
+
+
+const form: RequestFloat = reactive({
+  // email: "",
+  phone: "",
+  amount: "",
+  till: "",
+  description: "",
+  requestDate: new Date(),
+  status: "pending",
+});
+
+onMounted(() => {
+  const data = JSON.parse(<string>localStorage.getItem("tillOperatorAccount"));
+
+  if (data) {
+    // form.email = data.email;
+    form.till = data.till;
+  }
+});
+
 
 function submit() {
   const payload = {
+    email: form.email, // Include email
     amount: form.amount,
     till: form.till,
     description: form.description,
+    // status: form.status,
   };
-
   console.log("Submitting payload:", payload);
 
   loading.value = true;
-  billingStore.requestFloat(payload); // API call to allocate float
-  // .then(() => {
-  // billingStore.adjustFloatLedger(payload); // Adjust ledger
-  // balanceStore.decreaseTotalBalance(payload.amount); // Update balance
+  billingStore.requestFloat(payload)
   balanceStore.increaseTotalBalance(payload.amount); // Update balance
-  // notify.success(`Float allocated to branch: ${form.branchId}`);
-  notify.success(`Float request submitted successfully.`);
   emit("floatAllocated");
-  // })
-  // .catch((err) => {
-  // console.error("Error allocating float:", err);
-  // notify.error("Failed to allocate float.");
-  // })
-  // .finally(() => {
-  // loading.value = false;
-  // });
+  loading.value = false;
 }
 
 //watch amount being typed and display the amount the span below
