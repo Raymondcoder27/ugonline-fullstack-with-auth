@@ -194,14 +194,32 @@ export const useBilling = defineStore("billing", () => {
   //   console.log("Float Requests:", floatRequestsToAdmin.value);
   // }
 
-  // onMounted(() => {
-  //   const data = JSON.parse(<string>localStorage.getItem("branchManagerAccount"));
-  
-  //   if (data) {
-  //     form.email = data.email;
-  //     form.branch = data.branch;
-  //   }
-  // });
+  async function fetchFloatRequestsToAdmin() {
+    try {
+      // Fetch all float requests from the API
+      const { data } = await api.get("/till-operator/float-requests");
+      
+      // Get branch from localStorage
+      const storedAccount = localStorage.getItem("branchManagerAccount");
+      if (storedAccount) {
+        const account = JSON.parse(storedAccount);
+        const userBranch = account.branch;
+        
+        // Filter requests by matching branch
+        floatRequestsToAdmin.value = data.data.filter(
+          (request: FloatRequest) => request.branch === userBranch
+        );
+      } else {
+        console.error("No branch manager account found in localStorage");
+        floatRequestsToAdmin.value = [];
+      }
+      
+      console.log("Filtered Float Requests:", floatRequestsToAdmin.value);
+    } catch (error) {
+      console.error("Error fetching float requests:", error);
+      floatRequestsToAdmin.value = [];
+    }
+  }
 
 
   async function requestFloatToAdmin(payload: RequestFloatToAdmin) {
