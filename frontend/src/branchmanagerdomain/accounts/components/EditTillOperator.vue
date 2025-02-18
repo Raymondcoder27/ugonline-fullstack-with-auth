@@ -52,7 +52,7 @@ function submit() {
     email: form.email,
     phone: form.phone,
     // role: form.role,
-    tillId: form.tillId,
+    till: form.till,
   };
   loading.value = true;
   store.addManagerAccount(payload); // Simply add the Till
@@ -74,6 +74,7 @@ onMounted(() => {
   form.phone = data.phone;
   form.status = data.status;
   form.username = data.username;
+  form.till   = data.till;
 });
 
 // .finally(() => (loading.value = false));
@@ -164,7 +165,7 @@ onMounted(() => {
           >Select Till</label
         >
         <select
-          v-model="form.tillId"
+          v-model="form.till"
           class="noFocus form-element e-input w-full"
         >
           <option :value="null">-- Select Till --</option>
