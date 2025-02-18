@@ -157,7 +157,43 @@ const viewprofile = () => {
           <!-- User Profile and Logout Section -->
 
           <div class="flex items-center space-x-4">
-            <i class="fa-solid fa-user text-xl cursor-pointer" @click="viewprofile"></i>
+            <!-- <i class="fa-solid fa-user text-xl cursor-pointer" @click="viewprofile"></i> -->
+             <i class="fa-solid fa-user text-xl cursor-pointer" @click="showMenu = !showMenu">
+
+             </i>
+
+             <!-- this was just added -->
+             <div
+          v-if="showMenu"
+          class="absolute bg-white shadow-xl top-10 rounded-lg p-1 border mt-1 w-[330px] right-0"
+        >
+          <router-link to="/user" @click="showMenu = !showMenu">
+            <div
+              class="flex items-center gap-3 rounded-lg hover:bg-gray-200 p-2"
+            >
+              <img
+                :src="userDetails?.image"
+                alt=""
+                class="rounded-full ml-1 cursor-pointer min-w-[35px] max-h-[35px]"
+              />
+              <!-- <span>Raymond Mwebe</span> -->
+              <!-- <span>{{userDetails.user.name}}</span> -->
+              <span v-if="userDetails">{{ userDetails?.name }}</span>
+            </div>
+          </router-link>
+          <button
+            class="w-full flex items-center gap-3 hover:bg-gray-200 px-2 py-2.5 rounded-lg"
+            as="button"
+            @click="logout"
+            method="post"
+          >
+            <Logout class="pl-2" :size="30" />
+            <span @click="logout">Logout</span>
+          </button>
+          <div class="text-xs font-semi-bold p-2 pt-3 border-t mt-2">
+            Privacy . Terms . Advertising . AdChoices . Cookies . Meta
+          </div>
+        </div>
             <p class="text-sm font-bold">
               {{ accountStore.profile?.firstName }}
             </p>
