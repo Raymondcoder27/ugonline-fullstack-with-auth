@@ -174,8 +174,12 @@ let showMenu = ref(false);
                 <div
                   class="flex items-center gap-3 rounded-lg hover:bg-gray-200 p-2"
                 >
-                  <img
+                  <!-- <img
                     :src="userDetails?.image"
+                    alt=""
+                    class="rounded-full ml-1 cursor-pointer min-w-[35px] max-h-[35px]"
+                  /> -->
+                  <img
                     alt=""
                     class="rounded-full ml-1 cursor-pointer min-w-[35px] max-h-[35px]"
                   />
