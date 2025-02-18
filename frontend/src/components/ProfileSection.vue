@@ -168,7 +168,7 @@ let showMenu = ref(false);
             <!-- this was just added -->
             <div
               v-if="showMenu"
-              class="absolute bg-white shadow-xl top-10 rounded-lg p-1 border mt-1 w-[330px] right-0"
+              class="absolute bg-white shadow-xl top-10 rounded-lg p-1 border mt-1 w-[270px] right-0"
             >
               <router-link to="/user" @click="showMenu = !showMenu">
                 <div
@@ -179,10 +179,9 @@ let showMenu = ref(false);
                     alt=""
                     class="rounded-full ml-1 cursor-pointer min-w-[35px] max-h-[35px]"
                   /> -->
-                  <img
-                    alt=""
-                    class="rounded-full ml-1 cursor-pointer min-w-[35px] max-h-[35px]"
-                  />
+                  <i
+              class="fa-solid fa-user text-xl cursor-pointer"
+            >
                   <span>View Profile</span>
                 </div>
               </router-link>
