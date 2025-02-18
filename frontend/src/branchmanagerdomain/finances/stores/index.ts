@@ -188,11 +188,21 @@ export const useBilling = defineStore("billing", () => {
     console.log("Float Requests:", floatRequests.value);
   }
 
-  async function fetchFloatRequestsToAdmin() {
-    const { data } = await api.get("/branch-manager/float-requests");
-    floatRequestsToAdmin.value = data.data;
-    console.log("Float Requests:", floatRequestsToAdmin.value);
-  }
+  // async function fetchFloatRequestsToAdmin() {
+  //   const { data } = await api.get("/branch-manager/float-requests");
+  //   floatRequestsToAdmin.value = data.data;
+  //   console.log("Float Requests:", floatRequestsToAdmin.value);
+  // }
+
+  // onMounted(() => {
+  //   const data = JSON.parse(<string>localStorage.getItem("branchManagerAccount"));
+  
+  //   if (data) {
+  //     form.email = data.email;
+  //     form.branch = data.branch;
+  //   }
+  // });
+
 
   async function requestFloatToAdmin(payload: RequestFloatToAdmin) {
     try {
