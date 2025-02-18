@@ -124,9 +124,10 @@ function logout() {
   loading.value = false;
 }
 
-const viewprofile = () => {
-  router.push({ name: "app-profile" });
-};
+// const viewprofile = () => {
+//   router.push({ name: "app-profile" });
+// };
+let showMenu = ref(false);
 </script>
 
 <template>
@@ -178,9 +179,7 @@ const viewprofile = () => {
                     alt=""
                     class="rounded-full ml-1 cursor-pointer min-w-[35px] max-h-[35px]"
                   />
-                  <!-- <span>Raymond Mwebe</span> -->
-                  <!-- <span>{{userDetails.user.name}}</span> -->
-                  <span v-if="userDetails">{{ userDetails?.name }}</span>
+                  <span>View Profile</span>
                 </div>
               </router-link>
               <button
@@ -190,7 +189,7 @@ const viewprofile = () => {
                 method="post"
               >
                 <Logout class="pl-2" :size="30" />
-                <span @click="logout">Logout</span>
+                <span @click="logout">View Till Details</span>
               </button>
               <div class="text-xs font-semi-bold p-2 pt-3 border-t mt-2">
                 Privacy . Terms . Advertising . AdChoices . Cookies . Meta
