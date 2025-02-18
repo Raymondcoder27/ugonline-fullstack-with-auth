@@ -39,7 +39,7 @@ onMounted(() => {
 
 function submit() {
   const payload = {
-    email: form.email, // Include email
+    // email: form.email, // Include email
     amount: form.amount,
     till: form.till,
     description: form.description,
