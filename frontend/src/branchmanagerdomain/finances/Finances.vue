@@ -60,7 +60,7 @@ function select(tab: string) {
             <span class="text-gray-500">
               <!-- {{ finalFloat.currentFinalFloat.toLocaleString() }}/= -->
               <!-- {{ totalBalance.currentBalance.toLocaleString() }}/= -->
-                150,000,000/=
+              150,000,000/=
             </span></span
           >
 
