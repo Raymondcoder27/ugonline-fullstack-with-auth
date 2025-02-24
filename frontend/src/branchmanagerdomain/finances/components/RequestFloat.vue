@@ -23,7 +23,7 @@ const form: FloatRequest = reactive({
   email: "",
   phone: "",
   amount: "",
-  branch: "",
+  branch: "Branch 1",
   description: "",
   requestDate: new Date(),
   status: "pending",
