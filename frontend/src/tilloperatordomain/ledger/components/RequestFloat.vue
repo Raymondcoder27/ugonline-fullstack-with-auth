@@ -28,7 +28,7 @@ let form: RequestFloat = reactive({
   // email: "",
   phone: "",
   amount: "",
-  till: "",
+  till: "Till 1",
   description: "",
   requestDate: new Date(),
   status: "pending",
