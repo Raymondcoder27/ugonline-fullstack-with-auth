@@ -212,6 +212,19 @@ const router = createRouter({
 //   } 
 // });
 
+// // Navigation Guard
+// router.beforeEach((to, from, next) => {
+//   const isAuthenticated = !!localStorage.getItem('token'); // Check for token
+
+//   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
+//     // If the route requires auth and user is not authenticated
+//     next({ name: 'app-account-sign-in' }); // Redirect to login
+//   } else {
+//     next(); // Proceed to the route
+//   }
+// });
+
+
 // Navigation Guard
 router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem('token'); // Check for token
@@ -219,7 +232,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
     // If the route requires auth and user is not authenticated
     next({ name: 'app-account-sign-in' }); // Redirect to login
-  } else {
+  } else if (to.name === "app-account-sign-in" && isAuthenticated)  {
     next(); // Proceed to the route
   }
 });
