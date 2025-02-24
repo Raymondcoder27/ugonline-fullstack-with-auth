@@ -7,6 +7,7 @@ import moment from "moment";
 import type { IGoFilter } from "@/types";
 import TransactionDetails from "@/agentadmindomain/finances/components/TransactionDetails.vue";
 import { useNotificationsStore } from "@/stores/notifications";
+import { Transaction } from "@/agentadmindomain/finances/types";
 
 const notify = useNotificationsStore();
 
