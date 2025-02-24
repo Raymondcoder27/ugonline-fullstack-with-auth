@@ -167,6 +167,80 @@ const copyToClipboard = async (trackingNumber: string) => {
 
 watch(() => filter, updateFilter, { deep: true });
 
+
+function statusStyling(status?: string) {
+  if (status == "PENDING") {
+    return "flex px-2 py-1 rounded bg-gray-500 text-white";
+  }
+
+  if (status == "SUBMITTED" || status == "RECEIVED") {
+    return "flex px-2 py-1 rounded bg-green-400 text-white";
+  }
+
+  if (status == "AWAITING_PAYMENT") {
+    return "flex px-2 py-1 rounded bg-warning-700 text-warning-800";
+  }
+
+  if (status == "SENT") {
+    return "flex px-2 py-1 rounded bg-warning-600 text-white";
+  }
+
+  if (status == "APPROVED" || status == "COMPLETED") {
+    return "flex px-2 py-1 rounded bg-green-600 text-white";
+  }
+
+  if (status == "QUERIED") {
+    return "flex px-2 py-1 rounded bg-blue-600 text-whit";
+  }
+
+  if (status == "PAYMENT_FAILED") {
+    return "flex px-2 py-1 rounded bg-red-500 text-white";
+  }
+
+  if (status == "FAILED") {
+    return "flex px-2 py-1 rounded bg-red-500 text-white";
+  }
+}
+
+function statusIcon(status?: string) {
+  if (status == "PENDING") {
+    return "fa-solid fa-clock-rotate-left mx-1";
+  }
+
+  if (status == "SUBMITTED" || status == "RECEIVED") {
+    return "fa-solid fa-envelope-circle-check mx-1";
+  }
+
+  if (status == "AWAITING_PAYMENT") {
+    return "fa-solid fa-clock-rotate-left mx-1";
+  }
+
+  if (status == "SENT") {
+    return "fa-solid fa-clock-rotate-left mx-1";
+  }
+
+  if (status == "APPROVED" || status == "COMPLETED") {
+    return "fa-solid fa-check-circle mx-1";
+  }
+
+  if (status == "QUERIED") {
+    return "fa-solid fa-question-circle mx-1";
+  }
+
+  if (status == "PAYMENT_FAILED") {
+    return "fa-solid fa-money-bill-transfer mx-1";
+  }
+
+  if (status == "FAILED") {
+    return "fa-solid fa-times-circle mx-1";
+  }
+}
+
+function convertDateTimeNullable(date?: string) {
+  return moment(date).format("DD-MM-YYYY HH:mm:ss");
+}
+
+
 // Initialize fetch on mounted
 // onMounted(() => fetch());
 onMounted(() => {
