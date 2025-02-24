@@ -68,7 +68,7 @@ function submit() {
 onMounted(() => {
   // loading.value = true;
   tillStore
-    .fetchBranches()
+    .fetchTills()
     // .finally(() => (loading.value = false));
 });
 </script>

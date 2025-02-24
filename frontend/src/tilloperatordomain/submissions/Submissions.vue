@@ -173,6 +173,8 @@ function transactionDetails(id: string) {
   // console.log(`Assigning manager for branch: ${branch.name}`);
   // Example: modalOpen.value = true;
   transactionDetailsModalOpen.value = true;
+  console.log("modal opened")
+
 }
 
 // Billing-specific filter
@@ -252,6 +254,7 @@ function previous() {
 
 function open() {
   modalOpen.value = true;
+  console.log("modal opened")
 }
 
 function close() {
