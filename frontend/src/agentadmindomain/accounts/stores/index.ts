@@ -132,7 +132,19 @@ export const useAccounts = defineStore("user-management", () => {
     }
   };
 
-  const fetchBranchManagers = async () => {
+  // const fetchBranchManagers = async () => {
+  //   isLoading.value = true;
+  //   try {
+  //     const { data } = await api.get("/agent-admin/branch-manager-accounts");
+  //     managerAccounts.value = data.data;
+  //   } catch (err) {
+  //     error.value = "Failed to fetch branch managers";
+  //     throw err;
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // };
+  async function fetchBranchManagers() {
     isLoading.value = true;
     try {
       const { data } = await api.get("/agent-admin/branch-manager-accounts");
