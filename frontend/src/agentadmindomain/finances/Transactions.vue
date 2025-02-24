@@ -90,6 +90,17 @@ const updateFilter = useDebounceFn(() => fetch(), 300, { maxWait: 5000 });
 // Date conversion utility
 // const convertDate = (date: string) => moment(date).format("DD-MM-YYYY");
 
+const selectedTransaction: Ref<Transaction | undefined> = ref();
+
+function view(transaction: Transaction) {
+  modalOpen.value = true;
+  selectedTransaction.value = transaction;
+}
+
+// function convertDateTime(date: string) {
+//   return moment(date).format("DD-MM-YYYY HH:mm:ss");
+// }
+
 function convertDateTime(date: string) {
   return moment(date).format("DD-MM-YYYY HH:mm:ss");
 }
@@ -364,7 +375,7 @@ onMounted(() => {
               </label>
             </td>
             <!-- <td>{{ idx + 1 }}</td> -->
-            <td class="rounded-md font-semibold text-red-700">
+            <!-- <td class="rounded-md font-semibold text-red-700">
               <span
                 class="hover:underline"
                 @click="transactionDetails(transaction.id)"
@@ -373,6 +384,20 @@ onMounted(() => {
               <i
                 @click="copyToClipboard(transaction.trackingNumber)"
                 class="fa-regular fa-copy mx-1 hover:text-gray-800"
+              ></i>
+            </td> -->
+            <td class="rounded-md font-semibold text-red-700">
+              <!-- <span
+                  @click="transactionDetails(transaction.id)"
+                  class="hover:underline"
+                > -->
+              <span @click="view(transaction)" class="hover:underline">
+                {{ transaction.trackingNumber }}
+              </span>
+              <!-- make it copy to clipboard -->
+              <i
+                @click="copyToClipboard(transaction.trackingNumber)"
+                class="fa-regular fa-copy mx-1 ml-4 hover:text-gray-800"
               ></i>
             </td>
             <td class="rounded-md font-semibold text-red-700 hover:underline">
