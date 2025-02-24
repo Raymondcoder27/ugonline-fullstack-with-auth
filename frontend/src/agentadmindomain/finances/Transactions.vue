@@ -124,6 +124,80 @@ function transactionDetails(id: string) {
   transactionDetailsModalOpen.value = true;
 }
 
+
+function statusStyling(status?: string) {
+  if (status == "PENDING") {
+    return "flex px-2 py-1 rounded bg-gray-500 text-white";
+  }
+
+  if (status == "SUBMITTED" || status == "RECEIVED") {
+    return "flex px-2 py-1 rounded bg-green-400 text-white";
+  }
+
+  if (status == "AWAITING_PAYMENT") {
+    return "flex px-2 py-1 rounded bg-warning-700 text-warning-800";
+  }
+
+  if (status == "SENT") {
+    return "flex px-2 py-1 rounded bg-warning-600 text-white";
+  }
+
+  if (status == "APPROVED" || status == "COMPLETED") {
+    return "flex px-2 py-1 rounded bg-green-600 text-white";
+  }
+
+  if (status == "QUERIED") {
+    return "flex px-2 py-1 rounded bg-blue-600 text-whit";
+  }
+
+  if (status == "PAYMENT_FAILED") {
+    return "flex px-2 py-1 rounded bg-red-500 text-white";
+  }
+
+  if (status == "FAILED") {
+    return "flex px-2 py-1 rounded bg-red-500 text-white";
+  }
+}
+
+function statusIcon(status?: string) {
+  if (status == "PENDING") {
+    return "fa-solid fa-clock-rotate-left mx-1";
+  }
+
+  if (status == "SUBMITTED" || status == "RECEIVED") {
+    return "fa-solid fa-envelope-circle-check mx-1";
+  }
+
+  if (status == "AWAITING_PAYMENT") {
+    return "fa-solid fa-clock-rotate-left mx-1";
+  }
+
+  if (status == "SENT") {
+    return "fa-solid fa-clock-rotate-left mx-1";
+  }
+
+  if (status == "APPROVED" || status == "COMPLETED") {
+    return "fa-solid fa-check-circle mx-1";
+  }
+
+  if (status == "QUERIED") {
+    return "fa-solid fa-question-circle mx-1";
+  }
+
+  if (status == "PAYMENT_FAILED") {
+    return "fa-solid fa-money-bill-transfer mx-1";
+  }
+
+  if (status == "FAILED") {
+    return "fa-solid fa-times-circle mx-1";
+  }
+}
+
+function convertDateTimeNullable(date?: string) {
+  return moment(date).format("DD-MM-YYYY HH:mm:ss");
+}
+
+
 // Watchers
 watch(
   () => modalOpen.value,
@@ -456,10 +530,101 @@ onMounted(() => {
   </div>
 
   <!-- Modal -->
-  <AppModal v-model="modalOpen" xl2>
+  <!-- <AppModal v-model="modalOpen" xl2>
     <CreateAccount @cancel="close" />
-  </AppModal>
+  </AppModal> -->
   <!-- /Modal -->
+
+
+  <!-- Modal -->
+  <AppModal v-model="modalOpen" xl4>
+    <p class="text-xl font-bold">Transaction Detail</p>
+    <div class="flex">
+      <div class="w-full">
+        <table class="w-12">
+          <thead>
+            <tr>
+              <th class="w-6/12">Field</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border border-gray-50">
+              <td class="p-1 font-bold">ID</td>
+              <td class="p-1">{{ selectedTransaction?.id }}</td>
+            </tr>
+            <!-- <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Tracking Number</td>
+              <td class="p-1">{{ selectedTransaction?.trackingNo }}</td>
+            </tr> -->
+            <!-- <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Date</td>
+              <td class="p-1">{{ selectedTransaction?.dateRequested }}</td>
+            </tr> -->
+            <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Service</td>
+              <td class="p-1">{{ selectedTransaction?.service }}</td>
+            </tr>
+            <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Provider</td>
+              <td class="p-1">{{ selectedTransaction?.provider }}</td>
+            </tr>
+            <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Fee</td>
+              <td class="p-1">{{ selectedTransaction?.fee }}</td>
+            </tr>
+            <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Status</td>
+              <td class="p-1">
+                <div class="flex">
+                  <div class="w-6/12">
+                    <div :class="statusStyling(selectedTransaction?.status)">
+                      <div class="w-4/12 text-center">
+                        <i :class="statusIcon(selectedTransaction?.status)"></i>
+                      </div>
+                      <div class="w-8/12">
+                        <label v-if="selectedTransaction?.status == 'SENT'">
+                          PROCESSING
+                        </label>
+                        <label v-else>
+                          {{ selectedTransaction?.status.replace("_", " ") }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <!-- <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Service</td>
+              <td class="p-1">{{ selectedTransaction?.serviceName }}</td>
+            </tr>
+            <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Provider</td>
+              <td class="p-1">{{ selectedTransaction?.providerName }}</td>
+            </tr> -->
+            <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Date</td>
+              <td class="p-1">
+                {{ convertDateTimeNullable(selectedTransaction?.createdAt) }}
+              </td>
+            </tr>
+            <!-- <tr class="border border-gray-50">
+              <td class="p-1 font-bold">Payload</td>
+              <td class="p-1 bg-gray-50">
+                <div class="flex">
+                  <div class="w-full  rounded">
+                    <pre>{{ selectedTransaction?.data }}</pre>
+                  </div>
+                </div>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </AppModal>
+
 
   <!-- Tracking Number Modal to show transaction details -->
   <AppModal v-model="transactionDetailsModalOpen" xl2>
