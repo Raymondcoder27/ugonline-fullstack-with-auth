@@ -124,7 +124,6 @@ function transactionDetails(id: string) {
   transactionDetailsModalOpen.value = true;
 }
 
-
 function statusStyling(status?: string) {
   if (status == "PENDING") {
     return "flex px-2 py-1 rounded bg-gray-500 text-white";
@@ -196,7 +195,6 @@ function statusIcon(status?: string) {
 function convertDateTimeNullable(date?: string) {
   return moment(date).format("DD-MM-YYYY HH:mm:ss");
 }
-
 
 // Watchers
 watch(
@@ -535,7 +533,6 @@ onMounted(() => {
   </AppModal> -->
   <!-- /Modal -->
 
-
   <!-- Modal -->
   <AppModal v-model="modalOpen" xl4>
     <p class="text-xl font-bold">Transaction Detail</p>
@@ -624,7 +621,6 @@ onMounted(() => {
       </div>
     </div>
   </AppModal>
-
 
   <!-- Tracking Number Modal to show transaction details -->
   <AppModal v-model="transactionDetailsModalOpen" xl2>
