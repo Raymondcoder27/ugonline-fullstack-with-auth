@@ -225,17 +225,27 @@ const router = createRouter({
 // });
 
 
-// Navigation Guard
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token'); // Check for token
+  const { credentials, refreshToken } = useAuth(); // Get authentication data
 
-  if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
-    // If the route requires auth and user is not authenticated
-    next({ name: 'app-account-sign-in' }); // Redirect to login
-  } else if (to.name === "app-account-sign-in" && isAuthenticated)  {
-    next(); // Proceed to the route
+  const isAuthenticated = !!credentials.value; // User is authenticated if credentials exist
+  const isTokenExpired = refreshToken.value ? refreshToken.value.exp < moment().unix() : true; // Check if token expired
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Route requires authentication
+    if (!isAuthenticated || isTokenExpired) {
+      next({ name: "app-account-sign-in" }); // Redirect to login if not authenticated or token expired
+    } else {
+      next(); // Allow access if authenticated and token is valid
+    }
+  } else if (to.name === "app-account-sign-in" && isAuthenticated) {
+    // Prevent authenticated users from accessing login
+    next({ name: "agent-admin-home" }); // Redirect to dashboard
+  } else {
+    next(); // Proceed normally
   }
 });
+
 
 
 export default router;
