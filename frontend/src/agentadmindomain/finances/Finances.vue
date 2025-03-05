@@ -2,7 +2,6 @@
 import { ref, type Ref } from "vue";
 // import BackofficeAccounts from "@/agentadmindomain/accounts/BackofficeAccounts.vue";
 // import UserAccounts from "@/agentadmindomain/accounts/UserAccounts.vue";
-
 import FloatLedgers from "@/agentadmindomain/finances/FloatLedgers.vue";
 import FloatManagement from "@/agentadmindomain/finances/FloatAllocation.vue";
 import FloatAllocationTabbed from "@/agentadmindomain/finances/FloatAllocationTabbed.vue";
