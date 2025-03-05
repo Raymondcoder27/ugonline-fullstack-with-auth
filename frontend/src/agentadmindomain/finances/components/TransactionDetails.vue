@@ -75,7 +75,7 @@ onMounted(() => {
 
 <template>
   <div class="bg-white py-5">
-    <p class="text-xl font-bold">Transaction Details</p>
+    <p class="text-xl font-bold">Transaction ID Details</p>
     <!-- <p class="text-sm text-gray-500">The allocation of funds by a Super Agent to a designated branch or till to ensure liquidity for transactions and service delivery.</p> -->
     <form @submit.prevent="submit" class="pt-5">
 

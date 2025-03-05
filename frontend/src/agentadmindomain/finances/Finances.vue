@@ -9,7 +9,6 @@ import FloatAllocationTabbed from "@/agentadmindomain/finances/FloatAllocationTa
 import Transactions from "@/agentadmindomain/finances/Transactions.vue";
 import FloatRequests from "@/agentadmindomain/finances/FloatRequests.vue";
 import { useBalance } from "@/agentadmindomain/balance/stores";
-
 const balanceStore = useBalance();
 
 balanceStore.fetchTotalBalance();
