@@ -13,7 +13,6 @@ const balanceStore = useBalance();
 balanceStore.fetchTotalBalance();
 
 const totalBalance = balanceStore.totalBalance;
-
 // const availableFloat = balanceStore.availableFloat;
 const finalFloat = balanceStore.finalFloat;
 
